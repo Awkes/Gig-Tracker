@@ -9,6 +9,8 @@ export default {
     error: '#f00',
     modes: {
       dark: {
+        primary: '#887880',
+        secondary: '#8A4F7d',
         text: '#fff',
         background: '#333',
       }
