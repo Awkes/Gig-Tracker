@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import AuthContext from "../contexts/AuthContext"
 
@@ -8,6 +9,7 @@ const tempPass = 'password';
 const useAuth = () => {
   const { authUser, setAuthUser } = useContext<any>(AuthContext);
   const [signInError, setSignInError] = useState<string|null>(null);
+  const history = useHistory();
 
   function signIn(email: string|undefined, password: string|undefined) {
     if (email?.toLowerCase() === tempUser && password === tempPass) {
@@ -17,13 +19,14 @@ const useAuth = () => {
     }
     else {
       setAuthUser(null);
-      setSignInError('Invalid credentials.')
+      setSignInError('Invalid credentials.');
     }
   }
-
+  
   function signOut() {
     sessionStorage.removeItem('authUser');
     setAuthUser(null);
+    history.push('/');
   }
 
   return { authUser, signIn, signInError, signOut };
