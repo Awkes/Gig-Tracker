@@ -27,7 +27,7 @@ const Header = () => {
       paddingY: 2,
       paddingX: [2, 3],
       backgroundColor: 'secondary',
-      boxShadow: '0px 0px 5px #000',
+      boxShadow: 0,
     }}>
       <Logo />
 

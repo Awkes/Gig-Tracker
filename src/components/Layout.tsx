@@ -24,7 +24,7 @@ const Layout = ({ children }: Props) => (
       paddingX: [3, null, 0],
       paddingY: 3,
       display: 'grid',
-      gridTemplateColumns: ['1fr', '1fr 1fr'],
+      gridTemplateColumns: ['1fr', 'auto 300px'],
       gap: 2,
     }}>
       {children}

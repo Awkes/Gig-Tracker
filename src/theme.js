@@ -1,21 +1,28 @@
 export default {
   colors: {
-    primary: '#8A4F7D',
-    secondary: '#887880',
-    tertiary: '#88A096',
+    primary: 'rgba(136, 120, 128, 1)',
+    secondary: 'rgba(138, 79, 125, 1)',
+    tertiary: '#ddd',
+    border: '#ccc',
     headerText: '#000',
-    text: '#000',
+    text: '#222',
     background: '#eee',
     error: '#f00',
     modes: {
       dark: {
-        primary: '#887880',
-        secondary: '#8A4F7d',
-        text: '#fff',
+        primary: 'rgba(136, 120, 128, 1)',
+        secondary: 'rgba(138, 79, 125, 1)',
+        tertiary: '#555',
+        border: '#111',
+        text: '#efefef',
         background: '#333',
       }
     }
   },
+  shadows: [
+    '0px 0px 5px #000',
+  ],
+  radii: ['5px'],
   fonts: {
     logo: 'Faster One',
     text: 'Alegreya Sans',
