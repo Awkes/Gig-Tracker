@@ -26,7 +26,7 @@ const AuthContextProvider = ({ children }: Props) => {
   }
 
   function signOut() {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('authUser');
     setAuthUser(null);
   }
 

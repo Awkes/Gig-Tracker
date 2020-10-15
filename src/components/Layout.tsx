@@ -2,7 +2,7 @@
 import { jsx } from 'theme-ui';
 import { ReactNode } from 'react';
 
-import Nav from './Nav';
+import Header from './Header';
 
 type Props = {
   children: ReactNode
@@ -10,12 +10,8 @@ type Props = {
 
 const Layout = ({ children }: Props) => (
   <div>
-    <header>
-      <h1>Gig-Tracker</h1>
-      <Nav />
-    </header>
-    <hr />
-    <main>
+    <Header />
+    <main sx={{ padding: 2 }}>
       {children}
     </main>
     <hr />
