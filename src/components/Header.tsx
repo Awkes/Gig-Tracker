@@ -42,7 +42,7 @@ const Header = () => {
 
       <Switch 
         checked={colorMode === 'dark'}
-        onClick={toggleColorMode}
+        onChange={toggleColorMode}
       />
 
       {authUser && <UserMenu />}
