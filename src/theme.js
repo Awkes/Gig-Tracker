@@ -26,5 +26,5 @@ export default {
     minWidth: '380px',
     maxWidth: '1200px',
   },
-  breakpoints: ['600px'],
+  breakpoints: ['620px', '1240px'],
 }

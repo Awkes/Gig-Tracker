@@ -9,13 +9,29 @@ type Props = {
 }
 
 const Layout = ({ children }: Props) => (
-  <div>
+  <div sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  }}>
     <Header />
-    <main sx={{ padding: 2 }}>
+
+    <main sx={{
+      flexGrow: 1,
+      width: '100%',
+      maxWidth: 'maxWidth',
+      margin: '0 auto',
+      paddingX: [3, null, 0],
+      paddingY: 3,
+      display: 'grid',
+      gridTemplateColumns: ['1fr', '1fr 1fr'],
+      gap: 2,
+    }}>
       {children}
     </main>
-    <hr />
-    <footer>
+
+    <footer sx={{ textAlign: 'center', }}>
+      <hr />
       Copyright &copy; Andreas Åkerlöf
     </footer>
   </div>

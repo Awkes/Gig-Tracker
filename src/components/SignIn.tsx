@@ -4,7 +4,7 @@ import { useState, ChangeEvent, MouseEvent } from 'react';
 
 import useAuth from '../hooks/useAuth';
 
-const SignInView = () => {
+const SingIn = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const { signIn, signInError } = useAuth();
@@ -51,4 +51,4 @@ const SignInView = () => {
   )
 }
 
-export default SignInView;
+export default SingIn;
