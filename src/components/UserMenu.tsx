@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,24 +10,27 @@ import useAuth from '../hooks/useAuth';
 const UserMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { authUser, signOut } = useAuth();
+  const menuRef = useRef<any>(null);
   
   function toggleMenu() {
     setMenuOpen(state => !state);
   }
 
   useEffect(() => {
-    // const clickOutside = e => {
-    //   if (!containerRef.current?.contains(e.target)) close();
-    // };
+    function clickOutside(e: Event) {
+      if (!menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      };
+    };
 
-    // if (containerRef.current !== null) {
-    //   document.addEventListener('click', clickOutside, false);
-    //   return () => document.removeEventListener('click', clickOutside, false);
-    // }
+    if (menuRef.current !== null) {
+      document.addEventListener('click', clickOutside, false);
+      return () => document.removeEventListener('click', clickOutside, false);
+    }
   });
   
   return (
-    <nav sx={{ position: 'relative' }}>
+    <nav ref={menuRef} sx={{ position: 'relative' }}>
       <button
         onClick={toggleMenu}
         sx={{
