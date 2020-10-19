@@ -10,12 +10,12 @@ const Logo = () => (
     width: '250px',
     fontFamily: 'logo', 
     fontWeight: 'normal',
-    color: 'headerText',
+    color: 'dark',
     cursor: 'default',
   }}>
     <Link 
       sx={{ 
-        color: 'headerText', 
+        color: 'dark', 
         textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',

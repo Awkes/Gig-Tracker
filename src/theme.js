@@ -4,7 +4,7 @@ export default {
     secondary: 'rgba(136, 120, 128, 1)',
     tertiary: '#ddd',
     border: '#ccc',
-    headerText: '#000',
+    dark: '#000',
     text: '#222',
     background: '#eee',
     error: '#f00',

@@ -15,7 +15,7 @@ const NavLink = ({ children, to }: Props) => (
       display: 'block',
       padding: 2,
       paddingTop: ({ space }) => space[2]+2+'px',
-      color: 'headerText',
+      color: 'dark',
       letterSpacing: 1,
       textDecoration: 'none',
       '&:after': {
