@@ -17,6 +17,8 @@ const Header = () => {
 
   return (
     <header sx={{
+      position: 'sticky',
+      top: 0,
       display: 'grid',
       gridTemplateColumns: authUser ? ['auto 40px 32px', 'auto auto 40px 32px'] : 'auto 30px',
       gap: 2,
