@@ -26,7 +26,7 @@ const Header = () => {
       minHeight: '70px',
       paddingY: 2,
       paddingX: [2, 3],
-      backgroundColor: 'secondary',
+      backgroundColor: 'primary',
       boxShadow: 0,
     }}>
       <Logo />

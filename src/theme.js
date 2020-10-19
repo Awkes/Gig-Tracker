@@ -1,7 +1,7 @@
 export default {
   colors: {
-    primary: 'rgba(136, 120, 128, 1)',
-    secondary: 'rgba(138, 79, 125, 1)',
+    primary: 'rgba(138, 79, 125, 1)',
+    secondary: 'rgba(136, 120, 128, 1)',
     tertiary: '#ddd',
     border: '#ccc',
     headerText: '#000',
@@ -10,8 +10,6 @@ export default {
     error: '#f00',
     modes: {
       dark: {
-        primary: 'rgba(136, 120, 128, 1)',
-        secondary: 'rgba(138, 79, 125, 1)',
         tertiary: '#555',
         border: '#111',
         text: '#efefef',

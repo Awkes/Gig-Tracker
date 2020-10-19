@@ -16,19 +16,7 @@ const Layout = ({ children }: Props) => (
   }}>
     <Header />
 
-    <main sx={{
-      flexGrow: 1,
-      width: '100%',
-      maxWidth: 'maxWidth',
-      margin: '0 auto',
-      paddingX: [3, null, 0],
-      paddingY: 3,
-      display: 'grid',
-      gridTemplateColumns: ['1fr', 'auto 300px'],
-      gap: 2,
-    }}>
-      {children}
-    </main>
+    {children}
 
     <footer sx={{ textAlign: 'center', }}>
       <hr />

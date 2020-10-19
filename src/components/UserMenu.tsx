@@ -1,7 +1,10 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
+import Button from './Button';
 import useAuth from '../hooks/useAuth';
 
 const UserMenu = () => {
@@ -10,7 +13,18 @@ const UserMenu = () => {
   
   function toggleMenu() {
     setMenuOpen(state => !state);
-  } 
+  }
+
+  useEffect(() => {
+    // const clickOutside = e => {
+    //   if (!containerRef.current?.contains(e.target)) close();
+    // };
+
+    // if (containerRef.current !== null) {
+    //   document.addEventListener('click', clickOutside, false);
+    //   return () => document.removeEventListener('click', clickOutside, false);
+    // }
+  });
   
   return (
     <nav sx={{ position: 'relative' }}>
@@ -23,13 +37,12 @@ const UserMenu = () => {
           borderRadius: '50%',
           border: 'none',
           cursor: 'pointer',
-          backgroundColor: 'primary',
+          backgroundColor: 'secondary',
           outline: 'none',
-          '&:hover': {
-
-          }
         }} 
-      />
+      >
+        <FontAwesomeIcon icon={faUser} />
+      </button>
       {menuOpen && (
         <div sx={{
           position: 'absolute',
@@ -39,29 +52,24 @@ const UserMenu = () => {
           display: 'grid',
           justifyItems: 'center',
           gap: 2,
-          backgroundColor: 'secondary',
-          borderColor: 'primary',
+          backgroundColor: 'tertiary',
           border: '1px solid',
+          borderColor: 'border',
+          borderRadius: 0,
           fontFamily: 'text',
           fontSize: 2,
           letterSpacing: 1,
+          boxShadow: 0,
         }}>
-          <div sx={{
-            backgroundColor: 'primary',
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-          }} />
           <div>
             {authUser}
           </div>
-          <button 
+          <Button 
             onClick={signOut}
-            sx={{ cursor: 'pointer' }}
             type="button" 
           >
             Sign out
-          </button>
+          </Button>
         </div>
       )}
     </nav>

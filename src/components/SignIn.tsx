@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { useState, ChangeEvent, MouseEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 import useAuth from '../hooks/useAuth';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 const SingIn = () => {
   const [email, setEmail] = useState<string>();
@@ -21,31 +23,31 @@ const SingIn = () => {
     }
   }
 
-  function handleSubmit(e: MouseEvent) {
+  function handleSubmit(e: FormEvent): void {
     e.preventDefault();
     signIn(email, password);
   }
 
   return (
-    <form 
+    <form
+      onSubmit={handleSubmit}
       sx={{
         display: 'grid',
-        width: 'fit-content',
         gap: 2,
       }}
     >
-      <h2>Sign in:</h2>
-      <label sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        Email (user@host.se):
-        <input type="email" name="email" onChange={handleInput} sx={{ marginLeft: 2 }} />
+      <h2 sx={{ margin: 0 }}>Sign in:</h2>
+      <label>
+        Email:<br />
+        <Input type="email" name="email" onChange={handleInput} placeholder="user@host.se" />
       </label>
-      <label sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        Password (password):
-        <input type="password" name="password" onChange={handleInput} sx={{ marginLeft: 2 }} />
+      <label >
+        Password:<br />
+        <Input type="password" name="password" onChange={handleInput} placeholder="password" />
       </label>
-      <button onClick={handleSubmit} sx={{ cursor: 'pointer' }}>
+      <Button>
         Sign in
-      </button>
+      </Button>
       {signInError && <span sx={{ color: 'error' }}>{signInError}</span>}
     </form>
   )
