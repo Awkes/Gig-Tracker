@@ -18,15 +18,16 @@ const Header = () => {
   return (
     <header sx={{
       display: 'grid',
-      gridTemplateColumns: authUser ? ['auto 50px 32px', 'auto auto 50px 32px'] : 'auto 30px',
+      gridTemplateColumns: authUser ? ['auto 40px 32px', 'auto auto 40px 32px'] : 'auto 30px',
       gap: 2,
       alignItems: 'center',
-      justifyItems: 'center',
+      justifyItems: 'left',
       minWidth: 'minWidth',
+      minHeight: '70px',
       paddingY: 2,
       paddingX: [2, 3],
-      backgroundColor: 'secondary',
-      boxShadow: '0px 0px 5px #000',
+      backgroundColor: 'primary',
+      boxShadow: 0,
     }}>
       <Logo />
 
@@ -34,7 +35,7 @@ const Header = () => {
         <div sx={{ 
           order: [3, 'initial'], 
           gridColumn: ['1/4', 'initial'],
-          justifySelf: [null, 'end']
+          justifySelf: ['center', 'end']
         }}>
           <Nav />
         </div>

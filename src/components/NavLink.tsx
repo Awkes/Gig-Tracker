@@ -21,7 +21,7 @@ const NavLink = ({ children, to }: Props) => (
       '&:after': {
         content: '""',
         display: 'block',
-        backgroundColor: 'primary',
+        backgroundColor: 'secondary',
         height: '2px',
         width: '100%',
         transform: 'scaleX(0)',

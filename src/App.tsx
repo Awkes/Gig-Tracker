@@ -4,8 +4,9 @@ import { ThemeProvider } from 'theme-ui';
 
 import theme from './theme';
 import { AuthContextProvider } from './contexts/AuthContext';
-import AuthRequired from './components/AuthRequired';
+import GuardedRoute from './components/GuardedRoute';
 import Layout from './components/Layout';
+import Home from './views/Home';
 import GigEditor from './views/GigEditor';
 import Gigs from './views/Gigs';
 import NotFound from './views/NotFound';
@@ -17,25 +18,26 @@ function App() {
       <AuthContextProvider>
         <Router>    
           <Layout>
-            <AuthRequired>
               <Switch>
                 <Route exact path="/">
+                  <Home />
+                </Route>
+                <GuardedRoute path="/gigs">
                   <Gigs />
-                </Route>
-                <Route path="/add-gig">
+                </GuardedRoute>
+                <GuardedRoute path="/add-gig">
                   <GigEditor />
-                </Route>
-                <Route  path="/edit-gig">
+                </GuardedRoute>
+                <GuardedRoute  path="/edit-gig">
                   <GigEditor />
-                </Route>
-                <Route path="/stats">
+                </GuardedRoute>
+                <GuardedRoute path="/stats">
                   <Stats />
-                </Route>
+                </GuardedRoute>
                 <Route>
                   <NotFound />
                 </Route>
               </Switch>
-            </AuthRequired>
           </Layout>
         </Router>
       </AuthContextProvider>
