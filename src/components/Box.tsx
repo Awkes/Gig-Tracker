@@ -4,17 +4,18 @@ import { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode,
-  noPadding?: boolean
+  noPadding?: boolean,
+  error?: boolean
 }
 
-const Box = ({ children, noPadding = false }: Props) => (
+const Box = ({ children, noPadding = false, error = false }: Props) => (
   <div sx={{
-    backgroundColor: 'tertiary',
+    backgroundColor: error ? 'errorBg' : 'tertiary',
     boxShadow: 1,
     borderRadius: 0,
     padding: noPadding ? 0 : 3,
     border: '1px solid',
-    borderColor: 'border',
+    borderColor: error ? 'error' : 'border',
   }}>
     {children}
   </div>

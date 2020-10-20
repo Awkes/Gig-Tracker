@@ -8,6 +8,7 @@ import GuardedRoute from './components/GuardedRoute';
 import Layout from './components/Layout';
 import Home from './views/Home';
 import GigEditor from './views/GigEditor';
+import GigInfo from './views/GigInfo';
 import Gigs from './views/Gigs';
 import NotFound from './views/NotFound';
 import Stats from './views/Stats';
@@ -25,10 +26,13 @@ function App() {
                 <GuardedRoute path="/gigs">
                   <Gigs />
                 </GuardedRoute>
+                <GuardedRoute path="/gig/:id">
+                  <GigInfo />
+                </GuardedRoute>
                 <GuardedRoute path="/add-gig">
                   <GigEditor />
                 </GuardedRoute>
-                <GuardedRoute  path="/edit-gig">
+                <GuardedRoute  path="/edit-gig/:id">
                   <GigEditor />
                 </GuardedRoute>
                 <GuardedRoute path="/stats">
