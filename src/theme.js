@@ -9,6 +9,7 @@ export default {
     text: '#222',
     background: '#eee',
     error: '#f00',
+    errorBg: 'rgba(255, 0, 0, .3)',
     modes: {
       dark: {
         tertiary: '#555',
