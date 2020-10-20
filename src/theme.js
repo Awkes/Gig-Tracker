@@ -3,6 +3,7 @@ export default {
     primary: 'rgba(138, 79, 125, 1)',
     secondary: 'rgba(136, 120, 128, 1)',
     tertiary: '#ddd',
+    quarternary: '#ccc',
     border: '#ccc',
     dark: '#000',
     text: '#222',
@@ -11,6 +12,7 @@ export default {
     modes: {
       dark: {
         tertiary: '#555',
+        quarternary: '#666',
         border: '#111',
         text: '#efefef',
         background: '#333',

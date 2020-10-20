@@ -13,7 +13,11 @@ const Button = (props: any) => (
       borderColor: 'border',
       borderRadius: 0,
       cursor: 'pointer',
-      backgroundColor: 'primary'
+      backgroundColor: 'primary',
+      '&:disabled': {
+        backgroundColor: 'secondary',
+        cursor: 'default',
+      }
     }} 
     {...props}
   />
