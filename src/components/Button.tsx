@@ -8,7 +8,10 @@ type Props = {
 
 const Button = ({ danger = false, ...props }: Props) => (
   <button 
-    sx={{ 
+    sx={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       width: '100%',
       padding: 1,
       fontFamily: 'text',
