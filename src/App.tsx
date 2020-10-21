@@ -29,10 +29,10 @@ function App() {
                 <GuardedRoute path="/gig/:id">
                   <GigInfo />
                 </GuardedRoute>
-                <GuardedRoute path="/add-gig">
+                <GuardedRoute path="/add-gig" key="add-gig">
                   <GigEditor />
                 </GuardedRoute>
-                <GuardedRoute  path="/edit-gig/:id">
+                <GuardedRoute  path="/edit-gig/:id" key="edit-gig">
                   <GigEditor />
                 </GuardedRoute>
                 <GuardedRoute path="/stats">
