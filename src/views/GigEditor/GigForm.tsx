@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { ChangeEvent, FormEvent, MouseEvent } from 'react';
+import { ChangeEvent, FormEvent, Fragment, MouseEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Box from '../../components/Box';
 import Button from '../../components/Button';
@@ -23,27 +23,27 @@ type Props = {
   },
   handleInput: (e: ChangeEvent) => void,
   handleSubmit: (e: FormEvent) => void,
-  handleDelete: (e: MouseEvent) => void;
+  handleDelete: (e: MouseEvent) => void,
+  addTrack: () => void,
+  delTrack: (e: MouseEvent<HTMLButtonElement>) => void,
 }
 
-const gridStyle = {
-  display: 'grid',
-  gap: 3,
-  '&> label': {
-    display: 'grid',
-    gridTemplateColumns: '60px auto',
-    gap: 3,
-    alignItems: 'center',
-    justifyItems: 'end',
-  },
-}
-
-const GigForm = ({ gig, handleInput, handleSubmit, handleDelete }: Props) => {
+const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTrack }: Props) => {
   const { artist, tour, date, venue, city, country, notes, setlist } = gig;
   return (
     <form onSubmit={handleSubmit} sx={{ display: 'grid', gap: 3 }}>
       <Box>
-        <div sx={gridStyle}>
+        <div sx={{
+          display: 'grid',
+          gap: 3,
+          '&> label': {
+            display: 'grid',
+            gridTemplateColumns: '60px auto',
+            gap: 3,
+            alignItems: 'center',
+            justifyItems: 'end'
+          }
+        }}>
           <h3 sx={{ margin: 0 }}>General Info</h3>
           <label>
             Artist:
@@ -82,13 +82,32 @@ const GigForm = ({ gig, handleInput, handleSubmit, handleDelete }: Props) => {
       </Box>
 
       <Box>
-        <div sx={gridStyle}>
+        <div sx={{
+          display: 'grid',
+          gap: 3,
+          gridTemplateColumns: 'auto 30px',
+          alignItems: 'center',
+        }}>
           <h3 sx={{ margin: 0 }}>Setlist</h3>
+          <Button type="button" onClick={addTrack}>
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>        
           {setlist.map((track: string, i: number) => (
-            <label key={`setlist-${i}`}>
-              {i+1}:
-              <Input type="text" value={track} name={`setlist-${i}`} onChange={handleInput} />
-            </label>
+            <Fragment key={`setlist-${i}`}>
+              <label sx={{
+                display: 'grid',
+                gridTemplateColumns: '60px auto',
+                gap: 3,
+                alignItems: 'center',
+                justifyItems: 'end',
+              }}>
+                {i+1}:
+                <Input type="text" value={track} name={`setlist-${i}`} onChange={handleInput} />
+              </label>
+              <Button danger type="button" data-index={i} onClick={delTrack}>
+                <FontAwesomeIcon icon={faMinus} />
+              </Button>
+            </Fragment>
           ))}
         </div>
       </Box>
@@ -96,11 +115,11 @@ const GigForm = ({ gig, handleInput, handleSubmit, handleDelete }: Props) => {
       <Box>
         <div sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3 }}>
           <Button type="button" onClick={handleDelete} danger>
-            <FontAwesomeIcon icon={faTrash} />
+            <FontAwesomeIcon icon={faTrash} sx={{ marginBottom: '2px'}} />
             <span sx={{ marginLeft: 2 }}>Delete</span>
           </Button>
           <Button type="submit">
-            <FontAwesomeIcon icon={faSave} />
+            <FontAwesomeIcon icon={faSave} sx={{ marginBottom: '2px'}} />
             <span sx={{ marginLeft: 2 }}>Save</span>
           </Button>
         </div>

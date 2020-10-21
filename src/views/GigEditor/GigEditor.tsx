@@ -49,6 +49,15 @@ const GigEditor = () => {
     window.confirm('Are your sure you want to delete this gig?');
   }
 
+  function addTrack() {
+    dispatch({ type: 'ADD_SETLIST_TRACK' })
+  }
+  
+  function delTrack(e: MouseEvent<HTMLButtonElement>): void {
+    const { index } = e.currentTarget.dataset;
+    dispatch({ type: 'DEL_SETLIST_TRACK', payload: index })
+  }
+
   return (
     <main sx={{
       flexGrow: 1,
@@ -70,7 +79,16 @@ const GigEditor = () => {
       </Box>
       {state.error 
         ? <Box error>{state.error}</Box>
-        : <GigForm gig={state.gig} {...{ handleInput, handleSubmit, handleDelete }} />
+        : (
+          <GigForm 
+            gig={state.gig}
+            addTrack={addTrack}
+            delTrack={delTrack}
+            handleDelete={handleDelete}
+            handleInput={handleInput}
+            handleSubmit={handleSubmit}
+          />
+        )    
       }
       <Prompt
         when={state.status === 'edited'} 

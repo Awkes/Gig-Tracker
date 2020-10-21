@@ -29,7 +29,7 @@ export function reducer(state: any, { type, payload }: any) {
         },
         status: 'edited'
       }
-    case 'UPDATE_SETLIST':
+    case 'UPDATE_SETLIST': {
       const setlist = [...state.gig.setlist];
       setlist[payload[0]] = payload[1];
       return {
@@ -40,6 +40,29 @@ export function reducer(state: any, { type, payload }: any) {
         },
         status: 'edited'
       }
+    }
+    case 'ADD_SETLIST_TRACK':
+      return {
+        ...state,
+        gig: {
+          ...state.gig,
+          setlist: [
+            ...state.gig.setlist,
+            ''
+          ]
+        }
+      }
+    case 'DEL_SETLIST_TRACK': {
+      const setlist = [...state.gig.setlist];
+      setlist.splice(payload, 1);
+      return {
+        ...state,
+        gig: {
+          ...state.gig,
+          setlist
+        }
+      }
+    }
     case 'STATUS_CHANGE':
       return {
         ...state,
