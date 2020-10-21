@@ -76,7 +76,10 @@ const GigInfo = () => {
             </Box>
 
             <Box>
-              {gig.information}
+              <h3 sx={{ margin: 0 }}>Notes</h3>
+              <div sx={{ marginTop: 3 }}>
+                {gig.notes}
+              </div>
             </Box>
 
             <Box>
