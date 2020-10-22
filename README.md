@@ -6,9 +6,15 @@ This application is being built as an examinating project while I'm attending th
 
 It's built using the MERN-stack with the following frameworks and tools.
 
-- [MongoDB](https://www.mongodb.com/)
-- [Express](https://expressjs.com/)
-- [React](https://reactjs.org/)
-- [Node.js](https://nodejs.org/en/)
+- [MongoDB](https://mongodb.com)
+- [Express](https://expressjs.com)
+- [React](https://reactjs.org)
+- [Node.js](https://nodejs.org/en)
 - [ThemeUI](https://theme-ui.com/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [React Router](https://reactrouter.com)
+- [Chart.js](https://chartjs.org) + [react-chartjs-2](https://github.com/jerairrest/react-chartjs-2)
+- [FontAwesome](https://fontawesome.com)
+
+I'm also trying to learn TypeScript while building this project.
+
+- [TypeScript](https://typescriptlang.org)
