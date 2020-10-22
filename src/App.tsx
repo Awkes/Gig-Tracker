@@ -19,29 +19,29 @@ function App() {
       <AuthContextProvider>
         <Router>    
           <Layout>
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <GuardedRoute path="/gigs">
-                  <Gigs />
-                </GuardedRoute>
-                <GuardedRoute path="/gig/:id">
-                  <GigInfo />
-                </GuardedRoute>
-                <GuardedRoute path="/add-gig" key="add-gig">
-                  <GigEditor />
-                </GuardedRoute>
-                <GuardedRoute  path="/edit-gig/:id" key="edit-gig">
-                  <GigEditor />
-                </GuardedRoute>
-                <GuardedRoute path="/stats">
-                  <Stats />
-                </GuardedRoute>
-                <Route>
-                  <NotFound />
-                </Route>
-              </Switch>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <GuardedRoute path="/gigs">
+                <Gigs />
+              </GuardedRoute>
+              <GuardedRoute path="/gig/:id">
+                <GigInfo />
+              </GuardedRoute>
+              <GuardedRoute path="/add-gig" key="add-gig">
+                <GigEditor />
+              </GuardedRoute>
+              <GuardedRoute  path="/edit-gig/:id" key="edit-gig">
+                <GigEditor />
+              </GuardedRoute>
+              <GuardedRoute path="/stats">
+                <Stats />
+              </GuardedRoute>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
           </Layout>
         </Router>
       </AuthContextProvider>
