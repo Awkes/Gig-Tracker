@@ -67,22 +67,22 @@ const Stats = () => {
       />
       
       <Box>
-        <h3 sx={{ margin: 0 }}>Most seen artists</h3>
+        <h3 sx={{ margin: 0, marginBottom: 3 }}>Most seen artists</h3>
         <OrderedList values={mostSeenArtists} />
       </Box>
       
       <Box>
-        <h3 sx={{ margin: 0 }}>Most visited venues</h3>
+        <h3 sx={{ margin: 0, marginBottom: 3 }}>Most visited venues</h3>
         <OrderedList values={mostVisitedVenues} />
       </Box>
       
       <Box>
-        <h3 sx={{ margin: 0 }}>Most visited cities</h3>
+        <h3 sx={{ margin: 0, marginBottom: 3 }}>Most visited cities</h3>
         <OrderedList values={mostVisitedCities} />
       </Box>
       
       <Box>
-        <h3 sx={{ margin: 0 }}>Most visited countries</h3>
+        <h3 sx={{ margin: 0, marginBottom: 3 }}>Most visited countries</h3>
         <OrderedList values={mostVisitedCountries} />
       </Box>
       

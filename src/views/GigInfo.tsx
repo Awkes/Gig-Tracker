@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import Box from '../components/Box';
+import HorizontalTable from '../components/HorizontalTable';
+import OrderedList from '../components/OrderedList';
 
 import { gigs } from '../api/mock-data.json';
 
@@ -47,32 +49,14 @@ const GigInfo = () => {
             </Box>
 
             <Box>
-              <dl sx={{
-                margin: 0,
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr',
-                gap: 3,
-                '&>dt': { fontWeight: 'bold' },
-                '&>dd': { margin: 0 }
-              }}>
-                <dt>Artist:</dt>
-                <dd>{gig.artist}</dd>
-
-                <dt>Tour:</dt>
-                <dd>{gig.tour}</dd>
-
-                <dt>Date:</dt>
-                <dd>{gig.date}</dd>
-
-                <dt>Venue:</dt>
-                <dd>{gig.venue}</dd>
-
-                <dt>City:</dt>
-                <dd>{gig.city}</dd>
-
-                <dt>Country:</dt>
-                <dd>{gig.country}</dd>          
-              </dl>
+              <HorizontalTable values={[
+                ['Artist:', gig.artist],
+                ['Tour:', gig.tour],
+                ['Date:', gig.date],
+                ['Venue:', gig.venue],
+                ['City:', gig.city],
+                ['Country:', gig.country],
+              ]} />
             </Box>
 
             <Box>
@@ -83,19 +67,8 @@ const GigInfo = () => {
             </Box>
 
             <Box>
-              <h3 sx={{ margin: 0 }}>
-                Setlist
-              </h3>
-              <ol sx={{ 
-                margin: 0,
-                marginTop: 3, 
-              }}>
-                {gig.setlist.map((song: string, i: number) => (
-                  <li key={`song+${i}`}>
-                    {song}
-                  </li>
-                ))}
-              </ol>
+              <h3 sx={{ margin: 0, marginBottom: 3 }}>Setlist</h3>
+              <OrderedList values={gig.setlist} />
             </Box>
           </Fragment>
       }

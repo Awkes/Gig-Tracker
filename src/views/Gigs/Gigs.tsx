@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
-import Box from '../components/Box';
-import Button from '../components/Button';
-import GigTable from '../components/GigTable';
-import Input from '../components/Input';
+import Box from '../../components/Box';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import GigTable from './GigTable';
 
-import { gigs } from '../api/mock-data.json';
+import { gigs } from '../../api/mock-data.json';
 
 const Gigs = () => {
   const [order, setOrder] = useState({ orderBy: 'artist', asc: true });
