@@ -50,7 +50,8 @@ export function reducer(state: any, { type, payload }: any) {
             ...state.gig.setlist,
             ''
           ]
-        }
+        },
+        status: 'edited'
       }
     case 'DEL_SETLIST_TRACK': {
       const setlist = [...state.gig.setlist];
@@ -60,7 +61,8 @@ export function reducer(state: any, { type, payload }: any) {
         gig: {
           ...state.gig,
           setlist
-        }
+        },
+        status: 'edited'
       }
     }
     case 'STATUS_CHANGE':
