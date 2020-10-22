@@ -1,6 +1,7 @@
 export default {
   colors: {
     primary: 'rgba(138, 79, 125, 1)',
+    primaryTrans: 'rgba(138, 79, 125, .5)',
     secondary: 'rgba(136, 120, 128, 1)',
     tertiary: '#ddd',
     quarternary: '#ccc',
