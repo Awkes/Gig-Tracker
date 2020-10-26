@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -8,12 +8,30 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import Box from '../components/Box';
 import HorizontalTable from '../components/HorizontalTable';
 import OrderedList from '../components/OrderedList';
-
-import { gigs } from '../api/mock-data.json';
+import Spinner from '../components/Spinner';
+import { getGig } from '../api';
 
 const GigInfo = () => {
   const { id } = useParams<any>();
-  const gig: any = useMemo(() => gigs.find((gig: any) => gig.id === Number(id)), [id]);
+  const [status, setStatus] = useState('pending');
+  const [gig, setGig] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
+
+  useEffect(() => {
+    getGig(id).then(
+      (data: any) => {
+        if (data?.error) { 
+          setStatus('error');
+          setError(data.error);
+        } 
+        else {
+          setStatus('resolved');
+          data ? setGig(data) : setError(`Can't find gig with id: ${id}`);
+        }
+      })
+  }, [id]);
+
+  if (status === 'pending') return <Spinner />;
 
   return (
     <main sx={{
@@ -30,9 +48,7 @@ const GigInfo = () => {
       letterSpacing: 1,
     }}>
       {!gig
-        ? <Box error>
-            Can't find gig with id: <b>{id}</b>.
-          </Box>
+        ? <Box error>{error}</Box>
         : <Fragment>
             <Box>
               <div sx={{ 
@@ -50,25 +66,25 @@ const GigInfo = () => {
 
             <Box>
               <HorizontalTable values={[
-                ['Artist:', gig.artist],
-                ['Tour:', gig.tour],
-                ['Date:', gig.date],
-                ['Venue:', gig.venue],
-                ['City:', gig.city],
-                ['Country:', gig.country],
+                ['Artist:', gig?.artist],
+                ['Tour:', gig?.tour],
+                ['Date:', gig?.date],
+                ['Venue:', gig?.venue],
+                ['City:', gig?.city],
+                ['Country:', gig?.country],
               ]} />
             </Box>
 
             <Box>
               <h3 sx={{ margin: 0 }}>Notes</h3>
               <div sx={{ marginTop: 3 }}>
-                {gig.notes}
+                {gig?.notes}
               </div>
             </Box>
 
             <Box>
               <h3 sx={{ margin: 0, marginBottom: 3 }}>Setlist</h3>
-              <OrderedList values={gig.setlist} />
+              <OrderedList values={gig?.setlist || []} />
             </Box>
           </Fragment>
       }

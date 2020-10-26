@@ -3,29 +3,31 @@ import { jsx } from 'theme-ui';
 import { ChangeEvent, FormEvent, MouseEvent, useEffect, useReducer } from 'react';
 import { Prompt, useParams } from 'react-router-dom';
 
+import { getGig } from '../../api';
 import Box from '../../components/Box';
+import Spinner from '../../components/Spinner';
 import GigForm from './GigForm';
 import { reducer, initialState } from './reducer';
 
-import { gigs } from '../../api/mock-data.json';
-
 const GigEditor = () => {
   const { id } = useParams<any>();
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(
+    reducer, { ...initialState, status: !id ? 'new' : 'pending'}
+  );
 
   useEffect(() => {
     if (id) {
-      dispatch({ type: 'STATUS_CHANGE', payload: 'pending' });
-      const gig = gigs.find((gig: any) => gig.id === Number(id));
-      if (gig) {
-        dispatch({ type: 'SET_GIG', payload: gig });
-      }
-      else {
-        dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` });
-      }
-    }
-    else {
-      dispatch({ type: 'STATUS_CHANGE', payload: 'new'});
+      getGig(id).then(
+        (data: any) => {
+          if (data?.error) {
+            dispatch({ type: 'ERROR', payload: data.error })
+          }
+          else {
+            data
+              ? dispatch({ type: 'SET_GIG', payload: data })
+              : dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` })
+          }
+        })
     }
   }, [id]);
 
@@ -57,6 +59,8 @@ const GigEditor = () => {
     const { index } = e.currentTarget.dataset;
     dispatch({ type: 'DEL_SETLIST_TRACK', payload: index })
   }
+  
+  if (state.status === 'pending') return <Spinner />;
 
   return (
     <main sx={{

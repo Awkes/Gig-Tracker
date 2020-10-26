@@ -1,19 +1,37 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import Box from '../../components/Box';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Spinner from '../../components/Spinner';
 import GigTable from './GigTable';
 
-import { gigs } from '../../api/mock-data.json';
+import { getGigs } from '../../api';
 
 const Gigs = () => {
+  const [status, setStatus] = useState('pending');
+  const [error, setError] = useState<string|null>(null);
+  const [gigs, setGigs] = useState([]);
   const [order, setOrder] = useState({ orderBy: 'artist', asc: true });
   const [total, setTotal] = useState(10)
+
+  useEffect(() => {
+    getGigs().then(
+      (data: any) => {
+        if (data?.error) { 
+          setStatus('error');
+          setError(data.error);
+        } 
+        else {
+          setStatus('resolved');
+          setGigs(data);
+        }
+      });
+  }, [])
 
   // Temporary BUGGY sorting, better sorting will be implemented with backend
   useEffect(() => {
@@ -26,6 +44,8 @@ const Gigs = () => {
   function loadMore() {
     setTotal(state => state + 10);
   }
+
+  if (status === 'pending') return <Spinner />;
 
   return (
     <main sx={{
@@ -53,12 +73,18 @@ const Gigs = () => {
           <Input type="text" name="filter" />
         </div>
       </Box>
-      <Box noPadding>
-        <GigTable gigs={gigs.slice(0, total)} setOrder={setOrder} />
-      </Box>
-      <Box>
-        <Button onClick={loadMore} disabled={total >= gigs.length}>Load more</Button>
-      </Box>
+      {status !== 'error' ? (
+        <Fragment>
+          <Box noPadding>
+            <GigTable gigs={gigs.slice(0, total)} setOrder={setOrder} />
+          </Box>
+          <Box>
+            <Button onClick={loadMore} disabled={total >= gigs.length}>Load more</Button>
+          </Box>
+        </Fragment>
+      ) : (
+        <Box error>{error}</Box>
+      )}    
     </main>
   );
 }
