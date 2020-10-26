@@ -33,11 +33,14 @@ const Gigs = () => {
       });
   }, [])
 
-  // Temporary BUGGY sorting, better sorting will be implemented with backend
+  // Temporary sorting, better sorting will be implemented with backend
   useEffect(() => {
-    const { orderBy, asc } = order || { orderBy: 'artist', asc: true };
-    gigs.sort((a: any, b: any) => a[orderBy] > b[orderBy] ? 1 : -1)
-    !asc && gigs.reverse();
+    const { orderBy, asc } = order;
+    setGigs(gigs => ( 
+      gigs.sort((a: any, b: any) => a[orderBy] > b[orderBy] 
+        ? (asc ? 1 : -1) 
+        : (asc ? -1 : 1)
+    )));
   }, [order]);
 
   // Temporary loading, real functionality to be implemented with backend
