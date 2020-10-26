@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
 
+import routes from '../config/routes';
 import NavLink from './NavLink';
 
-const Nav = () => (
+const Nav = () => {
+  const { gigsPath, addGigPath, statsPath } = routes;
+  return (
     <nav>
       <ul 
         sx={{ 
@@ -20,16 +23,17 @@ const Nav = () => (
         }}
       >
         <li>
-          <NavLink to="/gigs">Gigs</NavLink>
+          <NavLink to={gigsPath}>Gigs</NavLink>
         </li>
         <li>
-          <NavLink to="/add-gig">Add Gig</NavLink>
+          <NavLink to={addGigPath}>Add Gig</NavLink>
         </li>
         <li>
-          <NavLink to="/stats">Statistics</NavLink>
+          <NavLink to={statsPath}>Statistics</NavLink>
         </li>
       </ul>
     </nav>
   );
+}
 
 export default Nav;
