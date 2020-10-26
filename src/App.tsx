@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'theme-ui';
 
-import theme from './theme';
+import theme from './config/theme';
 import routes from './config/routes';
 
 import { AuthContextProvider } from './contexts/AuthContext';
