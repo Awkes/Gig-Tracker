@@ -12,9 +12,9 @@ const HorizontalTable = ({ values }: Props) => (
     '& td': { paddingLeft: 3 },
   }}>
     <tbody>
-      {values.map((row, i) => (
+      {values?.map((row, i) => (
         <tr key={`row-${i}`}>
-          {row.map((col, i) => i === 0
+          {row?.map((col, i) => i === 0
             ? <th key={`col-${i}`}>{col}</th>
             : <td key={`col-${i}`}>{col}</td>
           )}

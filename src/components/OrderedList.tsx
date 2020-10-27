@@ -8,7 +8,7 @@ type Props = {
 
 const OrderedList = ({ values }: Props) => (
   <ol sx={{ margin: 0 }}>
-    {values.map((value, i) => (
+    {values?.map((value, i) => (
       <li key={`list-item-${i}`}>
         {value}
       </li>
