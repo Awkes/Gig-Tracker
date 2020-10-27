@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { ChangeEvent, FormEvent, MouseEvent, useEffect, useReducer } from 'react';
+import { ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect, useReducer } from 'react';
 import { Prompt, useParams } from 'react-router-dom';
 
 import { getGig } from '../../api';
@@ -76,23 +76,23 @@ const GigEditor = () => {
       display: 'grid',
       gap: 3,
     }}>
-      <Box>
-        <h2 sx={{ margin: 0, justifySelf: 'start' }}>
-          {id ? 'Edit' : 'New'} Gig
-        </h2>
-      </Box>
-      {state.error 
+      {state.status === 'error' 
         ? <Box error>{state.error}</Box>
-        : (
-          <GigForm 
-            gig={state.gig}
-            addTrack={addTrack}
-            delTrack={delTrack}
-            handleDelete={handleDelete}
-            handleInput={handleInput}
-            handleSubmit={handleSubmit}
-          />
-        )    
+        : <Fragment>
+            <Box>
+              <h2 sx={{ margin: 0, justifySelf: 'start' }}>
+                {id ? 'Edit' : 'New'} Gig
+              </h2>
+            </Box>
+            <GigForm 
+              gig={state.gig}
+              addTrack={addTrack}
+              delTrack={delTrack}
+              handleDelete={handleDelete}
+              handleInput={handleInput}
+              handleSubmit={handleSubmit}
+            />
+          </Fragment>
       }
       <Prompt
         when={state.status === 'edited'} 

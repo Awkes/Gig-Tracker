@@ -47,7 +47,7 @@ const GigInfo = () => {
       fontFamily: 'text',
       letterSpacing: 1,
     }}>
-      {!gig
+      {error
         ? <Box error>{error}</Box>
         : <Fragment>
             <Box>
@@ -57,7 +57,7 @@ const GigInfo = () => {
                 alignItems: 'center',
                 justifyItems: 'center',
               }}>
-                <h2 sx={{ margin: 0, justifySelf: 'start' }}>{gig.artist}</h2>
+                <h2 sx={{ margin: 0, justifySelf: 'start' }}>{gig?.artist}</h2>
                 <Link to={`/edit-gig/${id}`}>
                   <FontAwesomeIcon icon={faEdit} sx={{ color: 'text'}} />
                 </Link>

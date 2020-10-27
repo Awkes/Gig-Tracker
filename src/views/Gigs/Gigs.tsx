@@ -64,30 +64,29 @@ const Gigs = () => {
       fontFamily: 'text',
       letterSpacing: 1,
     }}>
-      <Box>
-        <div sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: ['auto 32px 50%', 'auto 32px 30%'],
-          alignItems: 'center',
-          justifyItems: 'center',
-        }}>
-          <h2 sx={{ margin: 0, justifySelf: 'start' }}>Gigs</h2>
-          <FontAwesomeIcon icon={faFilter} sx={{ color: 'secondary'}} />
-          <Input type="text" name="filter" />
-        </div>
-      </Box>
-      {status !== 'error' ? (
-        <Fragment>
-          <Box noPadding>
-            <GigTable gigs={gigs.slice(0, total)} setOrder={setOrder} />
-          </Box>
-          <Box>
-            <Button onClick={loadMore} disabled={total >= gigs.length}>Load more</Button>
-          </Box>
-        </Fragment>
-      ) : (
-        <Box error>{error}</Box>
-      )}    
+      {status === 'error' 
+        ? <Box error>{error}</Box>
+        : <Fragment>
+            <Box>
+              <div sx={{ 
+                display: 'grid', 
+                gridTemplateColumns: ['auto 32px 50%', 'auto 32px 30%'],
+                alignItems: 'center',
+                justifyItems: 'center',
+              }}>
+                <h2 sx={{ margin: 0, justifySelf: 'start' }}>Gigs</h2>
+                <FontAwesomeIcon icon={faFilter} sx={{ color: 'secondary'}} />
+                <Input type="text" name="filter" />
+              </div>
+            </Box>
+            <Box noPadding>
+              <GigTable gigs={gigs.slice(0, total)} setOrder={setOrder} />
+            </Box>
+            <Box>
+              <Button onClick={loadMore} disabled={total >= gigs.length}>Load more</Button>
+            </Box>
+          </Fragment>
+      }    
     </main>
   );
 }
