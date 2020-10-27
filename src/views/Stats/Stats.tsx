@@ -7,6 +7,7 @@ import HorizontalTable from '../../components/HorizontalTable';
 import OrderedList from '../../components/OrderedList';
 import Spinner from '../../components/Spinner';
 import GigsVisitedOverTime from './GigsVisitedOverTime';
+
 import { getStats } from '../../api';
 
 const Stats = () => {
@@ -15,17 +16,17 @@ const Stats = () => {
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
-    getStats().then(
-      (data: any) => {
-        if (data?.error) { 
-          setStatus('error');
-          setError(data.error);
-        } 
-        else {
-          setStatus('resolved');
-          setStats(data);
-        }
-      })
+    (async function() {
+      try {
+        const { stats } = await getStats();
+        setStatus('resolved');
+        setStats(stats);
+      }
+      catch {
+        setStatus('error');
+        setError('Something went wrong, please try again!')
+      }
+    })();
   }, []);
 
   if (status === 'pending') return <Spinner />;
