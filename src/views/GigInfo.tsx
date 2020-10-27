@@ -9,7 +9,8 @@ import Box from '../components/Box';
 import HorizontalTable from '../components/HorizontalTable';
 import OrderedList from '../components/OrderedList';
 import Spinner from '../components/Spinner';
-import { getGig } from '../api';
+
+import { getGigs } from '../api';
 
 const GigInfo = () => {
   const { id } = useParams<any>();
@@ -18,17 +19,18 @@ const GigInfo = () => {
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
-    getGig(id).then(
-      (data: any) => {
-        if (data?.error) { 
-          setStatus('error');
-          setError(data.error);
-        } 
-        else {
-          setStatus('resolved');
-          data ? setGig(data) : setError(`Can't find gig with id: ${id}`);
-        }
-      })
+    (async function() {
+      try {
+        const { gigs } = await getGigs();
+        const gig = gigs.find((gig: any) => gig.id === Number(id))
+        setStatus(gig ? 'resolved' : 'error');
+        gig ? setGig(gig) : setError(`Can't find gig with id: ${id}`);
+      }
+      catch {
+        setStatus('error');
+        setError('Something went wrong, please try again!')
+      }
+    })();
   }, [id]);
 
   if (status === 'pending') return <Spinner />;

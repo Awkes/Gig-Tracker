@@ -3,11 +3,12 @@ import { jsx } from 'theme-ui';
 import { ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect, useReducer } from 'react';
 import { Prompt, useParams } from 'react-router-dom';
 
-import { getGig } from '../../api';
 import Box from '../../components/Box';
 import Spinner from '../../components/Spinner';
 import GigForm from './GigForm';
 import { reducer, initialState } from './reducer';
+
+import { getGigs } from '../../api';
 
 const GigEditor = () => {
   const { id } = useParams<any>();
@@ -17,17 +18,18 @@ const GigEditor = () => {
 
   useEffect(() => {
     if (id) {
-      getGig(id).then(
-        (data: any) => {
-          if (data?.error) {
-            dispatch({ type: 'ERROR', payload: data.error })
-          }
-          else {
-            data
-              ? dispatch({ type: 'SET_GIG', payload: data })
-              : dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` })
-          }
-        })
+      (async function() {
+        try {
+          const { gigs } = await getGigs();
+          const gig = gigs.find((gig: any) => gig.id === Number(id))
+          gig
+            ? dispatch({ type: 'SET_GIG', payload: gig })
+            : dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` })
+        }
+        catch {
+          dispatch({ type: 'ERROR', payload: 'Something went wrong, please try again!' })
+        }
+      })();
     }
   }, [id]);
 

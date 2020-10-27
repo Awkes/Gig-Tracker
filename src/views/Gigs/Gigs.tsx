@@ -10,7 +10,7 @@ import Input from '../../components/Input';
 import Spinner from '../../components/Spinner';
 import GigTable from './GigTable';
 
-import { getGigs } from '../../api';
+import { getGigs } from '../../api'
 
 const Gigs = () => {
   const [status, setStatus] = useState('pending');
@@ -20,17 +20,17 @@ const Gigs = () => {
   const [total, setTotal] = useState(10)
 
   useEffect(() => {
-    getGigs().then(
-      (data: any) => {
-        if (data?.error) { 
-          setStatus('error');
-          setError(data.error);
-        } 
-        else {
-          setStatus('resolved');
-          setGigs(data);
-        }
-      });
+    (async function() {
+      try {
+        const { gigs } = await getGigs();
+        setStatus('resolved');
+        setGigs(gigs);
+      }
+      catch {
+        setStatus('error');
+        setError('Something went wrong, please try again!')
+      }
+    })();
   }, [])
 
   // Temporary sorting, better sorting will be implemented with backend
