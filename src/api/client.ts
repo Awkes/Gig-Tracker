@@ -1,4 +1,5 @@
-const API_URL = 'https://run.mocky.io/v3';
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 export async function client(endpoint: string) {
   const res = await fetch(`${API_URL}/${endpoint}`);
