@@ -1,4 +1,4 @@
-const { Schema }= require('mongoose');
+const { model, Schema }= require('mongoose');
 
 const UserSchema = new Schema({
   username: String,
@@ -6,4 +6,6 @@ const UserSchema = new Schema({
   email: String,
 });
 
-module.exports = { UserSchema };
+const UserModel = model('user', UserSchema);
+
+module.exports = { UserModel };
