@@ -1,20 +1,27 @@
 const { model, Schema } = require('mongoose');
 
 const GigSchema = new Schema({
-  artist: String,
+  artist: {
+    type: String,
+    required: true
+  },
   tour: String,
   venue: String,
-  country: String,
   city: String,
-  date: Date,
+  country: String,
+  date: {
+    type: Date,
+    required: true
+  },
   notes: String,
   setlist: [String],
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User',
+    required: true
   }
 });
 
-const GigModel = model('gig', GigSchema);
+const GigModel = model('Gig', GigSchema);
 
-module.exports = { GigModel }
+module.exports = GigModel;
