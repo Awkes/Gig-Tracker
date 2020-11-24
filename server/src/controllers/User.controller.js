@@ -67,7 +67,6 @@ const updateUser = async (req, res) => {
       message: `User with id ${userId} successfully updated.`,
       name: response.name,
       email: response.email,
-      password: response.password,
     });
   } 
   catch(error) {
