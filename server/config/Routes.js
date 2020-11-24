@@ -6,10 +6,10 @@ module.exports = {
   deleteUser:   '/user/:userId',
 
   createGig:    '/gig',
-  // getGig:       '/gig/:gigId',
+  getGigs:      '/gigs/:userId',
+  getGig:       '/gig/:gigId',
   // updateGig:    '/gig/:gigId',
   // deleteGig:    '/gig/:gigId',
-  // getGigs:      '/gigs/:userId',
   // searchGigs:   '/gigs/:userId/:searchString',
 
   // getStats:     '/stats/:userId',
