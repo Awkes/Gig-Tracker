@@ -6,7 +6,7 @@ const userRoutes = app => {
   app.get(Routes.getUsers, UserController.getUsers);
   app.get(Routes.getUser, UserController.getUser);
   app.put(Routes.updateUser, UserController.updateUser);
-  // app.delete(Routes.deleteUser, UserController.deleteUser);
+  app.delete(Routes.deleteUser, UserController.deleteUser);
 }
 
 module.exports = userRoutes;

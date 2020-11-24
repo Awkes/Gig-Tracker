@@ -28,7 +28,6 @@ const getUsers = async (req, res) => {
       delete noPassUser.password;
       return noPassUser;
     });
-    console.log(users)
     res.status(200).send(users);
   }
   catch(error) {
@@ -79,6 +78,26 @@ const updateUser = async (req, res) => {
   }
 }
 
-// Delete user
+const deleteUser = async (req, res) => {
+  const { userId } = req.params;
 
-module.exports = { createUser, getUsers, getUser, updateUser };
+  try {
+    const response = await UserModel.findByIdAndDelete(userId);
+    if (response !== null) {
+      res.status(200).send({
+        message: `User with id ${userId} successfully deleted.`
+      })
+    } 
+    else {
+      throw new Error(`User with id: ${userId} doesn't exist.`)
+    }
+  }
+  catch(error) {
+    res.status(500).send({
+      message: `Error while trying to delete user with id: ${userId}.`,
+      error: error.message,
+    })
+  }
+}
+
+module.exports = { createUser, getUsers, getUser, updateUser, deleteUser };
