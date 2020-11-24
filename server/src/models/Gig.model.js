@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { model, Schema } = require('mongoose');
 
 const GigSchema = new Schema({
   artist: String,
@@ -15,4 +15,6 @@ const GigSchema = new Schema({
   }
 });
 
-module.exports = { GigSchema }
+const GigModel = model('gig', GigSchema);
+
+module.exports = { GigModel }
