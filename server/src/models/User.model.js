@@ -1,11 +1,11 @@
-const { model, Schema } = require('mongoose');
+const { model, models, Schema } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
   name: { 
     type: String, 
     minlength: [4, 'Name must be at least 4 characters.'],
-    maxlength: [20, 'Name cannot be longer than 20 characters.'],
+    maxlength: [50, 'Name cannot be longer than 50 characters.'],
     required: [true, 'Name is required.'],
   },
   password: {
@@ -23,10 +23,27 @@ const UserSchema = new Schema({
 
 // Hash password before saving
 UserSchema.pre('save', async function(next) {
-  const user = this;
-  if (user.isModified('password')) user.password = await bcrypt.hash(user.password, 10);
+  if (this.isModified('password')) this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+// Hash password before updating
+UserSchema.pre('findOneAndUpdate', async function(next) {
+  const { password } = this._update;
+  const { _id } = this.getFilter();
+  
+  const passwordHasChanged = await (async function() {
+    const user = await models['User'].findById(_id);
+    const { password: oldPassword } = user;
+    console.log(oldPassword, password)
+    return !bcrypt.compareSync(password, oldPassword)
+  })();
+  
+  if (passwordHasChanged) this._update.password = await bcrypt.hash(password, 10);
+  else delete this._update.password
+
+  next();
+})
 
 const UserModel = model('User', UserSchema);
 
