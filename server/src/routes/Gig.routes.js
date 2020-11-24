@@ -5,6 +5,7 @@ const gigRoutes = app => {
   app.post(Routes.createGig, GigController.createGig);
   app.get(Routes.getGigs, GigController.getGigs);
   app.get(Routes.getGig, GigController.getGig);
+  app.put(Routes.updateGig, GigController.updateGig);
 }
 
 module.exports = gigRoutes;

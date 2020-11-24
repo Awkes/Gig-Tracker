@@ -47,4 +47,25 @@ const getGig = async (req, res) => {
   }
 }
 
-module.exports = { createGig, getGigs, getGig }
+const updateGig = async (req, res) => {
+  const { gigId } = req.params;
+
+  try {
+    const response = await GigModel.findByIdAndUpdate(
+      gigId, req.body, { new: true, runValidators: true }
+    );
+    if (!response) throw new Error('No gig found');
+    res.status(200).send({
+      message: `Gig with id ${gigId} successfully updated.`,
+      ...response.toObject(),
+    });
+  } 
+  catch(error) {
+    res.status(500).send({
+      message: `Error while trying to update gig with id: ${gigId}.`,
+      error: error.message
+    });
+  }
+}
+
+module.exports = { createGig, getGigs, getGig, updateGig }
