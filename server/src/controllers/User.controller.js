@@ -14,10 +14,31 @@ const createUser = async (req, res) => {
   } 
   catch(error) {
     res.status(500).send({
-      message: 'Error, while trying to create new user.',
+      message: 'Error while trying to create new user.',
       error: error.message
     });
   }
 }
 
-module.exports = { createUser };
+const getUser = async (req, res) => {
+  const { userId } = req.params;
+  
+  try {
+    const response = await UserModel.findById(userId);
+    const user = response.toObject();
+    delete user.password;
+    res.status(200).send(user);
+  }
+  catch(error) {
+    res.status(500).send({
+      message: `Error while trying to get user with id: ${userId}.`,
+      error: error.message
+    })
+  }
+}
+
+// Update user
+
+// Delete user
+
+module.exports = { createUser, getUser };
