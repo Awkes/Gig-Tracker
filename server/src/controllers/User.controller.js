@@ -20,6 +20,25 @@ const createUser = async (req, res) => {
   }
 }
 
+const getUsers = async (req, res) => {
+  try {
+    const response = await UserModel.find();
+    const users = response.map(user => {
+      const noPassUser = user.toObject();
+      delete noPassUser.password;
+      return noPassUser;
+    });
+    console.log(users)
+    res.status(200).send(users);
+  }
+  catch(error) {
+    res.status(500).send({
+      message: 'Error while trying to get all users.',
+      error: error.message
+    })
+  }
+}
+
 const getUser = async (req, res) => {
   const { userId } = req.params;
   
@@ -62,4 +81,4 @@ const updateUser = async (req, res) => {
 
 // Delete user
 
-module.exports = { createUser, getUser, updateUser };
+module.exports = { createUser, getUsers, getUser, updateUser };
