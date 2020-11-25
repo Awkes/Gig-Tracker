@@ -9,7 +9,7 @@ module.exports = {
   getGigs:      '/gigs/:userId',
   getGig:       '/gig/:gigId',
   updateGig:    '/gig/:gigId',
-  // deleteGig:    '/gig/:gigId',
+  deleteGig:    '/gig/:gigId',
   // searchGigs:   '/gigs/:userId/:searchString',
 
   // getStats:     '/stats/:userId',

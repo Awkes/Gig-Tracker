@@ -68,4 +68,26 @@ const updateGig = async (req, res) => {
   }
 }
 
-module.exports = { createGig, getGigs, getGig, updateGig }
+const deleteGig = async (req, res) => {
+  const { gigId } = req.params;
+
+  try {
+    const response = await GigModel.findByIdAndDelete(gigId);
+    if (response !== null) {
+      res.status(200).send({
+        message: `Gig with id ${gigId} successfully deleted.`
+      })
+    } 
+    else {
+      throw new Error(`Gig with id: ${gigId} doesn't exist.`)
+    }
+  }
+  catch(error) {
+    res.status(500).send({
+      message: `Error while trying to delete gig with id: ${gigId}.`,
+      error: error.message,
+    })
+  }
+}
+
+module.exports = { createGig, getGigs, getGig, updateGig, deleteGig }
