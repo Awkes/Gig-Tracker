@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const { DB, Server } = require('./config');
 const userRoutes = require('./src/routes/User.routes');
+const gigRoutes = require('./src/routes/Gig.routes');
 
 const app = express();
 app.use(helmet());
@@ -14,6 +15,7 @@ app.get('/hello', (req, res) => {
 });
 
 userRoutes(app);
+gigRoutes(app);
 
 DB.connect();
 Server.listen(app);
