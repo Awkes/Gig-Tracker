@@ -17,11 +17,32 @@ const createGig = async (req, res) => {
 
 const getGigs = async (req, res) => {
   const { userId } = req.params;
-  
+  const { search, sort } = req.query;
+  const limit = req.query && Number(req.query.limit) || null;
+  let page = req.query && Number(req.query.page) || 1;
+
   try {
-    const response = await GigModel.find({ creator: userId });
-    if (response.length < 1) throw new Error('No gigs found.');
-    res.status(200).send(response);
+    // Pagination - Get number of documents and pages according to limit
+    const count = await GigModel
+      .search(search || null, { creator: userId })
+      .countDocuments();
+    const totalPages = Math.ceil(count / (limit || count)) || 0;
+    page = page < totalPages ? page : totalPages;
+    
+    const response = await GigModel
+      .search(search || null, { creator: userId })
+      .sort({ date: sort || 'desc' })
+      .skip((page-1) * limit)
+      .limit(limit)
+
+    res.status(200).send({
+      totalGigs: count,
+      gigsPerPage: limit || count,
+      totalPages,
+      currentPage: page,
+      searchString: search || null,
+      results: response
+    });
   }
   catch(error) {
     res.status(500).send({
