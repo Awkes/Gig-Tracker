@@ -11,5 +11,5 @@ module.exports = {
   updateGig:    '/gig/:gigId',
   deleteGig:    '/gig/:gigId',
 
-  // getStats:     '/stats/:userId',
+  getStats:     '/stats/:userId',
 }

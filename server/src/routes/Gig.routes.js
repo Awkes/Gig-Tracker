@@ -7,6 +7,7 @@ const gigRoutes = app => {
   app.get(Routes.getGig, GigController.getGig);
   app.put(Routes.updateGig, GigController.updateGig);
   app.delete(Routes.deleteGig, GigController.deleteGig);
+  app.get(Routes.getStats, GigController.getStats);
 }
 
 module.exports = gigRoutes;
