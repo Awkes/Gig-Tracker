@@ -4,7 +4,7 @@ const searchable = require('mongoose-regex-search');
 const GigSchema = new Schema({
   artist: {
     type: String,
-    required: true,
+    required: [true, 'Artist is required.'],
     searchable: true
   },
   tour: {
@@ -25,7 +25,7 @@ const GigSchema = new Schema({
   },
   date: {
     type: Date,
-    required: true,
+    required: [true, 'Date is required.'],
   },
   notes: {
     type: String,
@@ -38,7 +38,7 @@ const GigSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: [true, 'Creator is required.']
   }
 });
 
