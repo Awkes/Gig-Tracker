@@ -1,6 +1,6 @@
 const GigController = require('../controllers/Gig.controller');
 const Routes = require('../../config/Routes');
-const { verifyToken, verifyUser } = require('../middlewares/auth');
+const { verifyToken } = require('../middlewares/auth');
 
 const gigRoutes = app => {
   app.post(Routes.createGig, verifyToken, GigController.createGig);

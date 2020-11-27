@@ -13,9 +13,4 @@ function verifyToken(req, res, next) {
   })
 }
 
-function verifyUser(req, res, next) {
-  
-  next();
-}
-
-module.exports = { verifyToken, verifyUser };
+module.exports = { verifyToken };

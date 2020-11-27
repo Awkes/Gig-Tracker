@@ -9,8 +9,8 @@ module.exports = {
   createGig:    '/gig',
   getGigs:      '/gigs/:userId',
   getGig:       '/gig/:gigId',
-  updateGig:    '/gig/:gigId',
-  deleteGig:    '/gig/:gigId',
+  updateGig:    '/gig',
+  deleteGig:    '/gig',
 
   getStats:     '/stats/:userId',
 }

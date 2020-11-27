@@ -1,5 +1,6 @@
 const UserModel = require('../models/User.model');
 const { secret } = require('../../config/auth');
+const verifyUser = require('../utils/verifyUser');
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -40,60 +41,61 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   const { userId } = req.params;
-  
-  try {
-    const response = await UserModel.findById(userId);
-    const { id, name, email} = response;
-    res.status(200).send({ id, name, email });
-  }
-  catch(error) {
-    res.status(500).send({
-      message: `Error while trying to get user with id: ${userId}.`,
-      error: error.message
-    })
+
+  if (verifyUser(userId, req, res)) {
+    try {
+      const response = await UserModel.findById(userId);
+      const { id, name, email } = response;
+      
+      res.status(200).send({ id, name, email });
+    }
+    catch(error) {
+      res.status(500).send({
+        message: `Error while trying to get user with id: ${userId}.`,
+        error: error.message
+      })
+    }
   }
 }
 
 const updateUser = async (req, res) => {
-  const { id, name, password, email } = req.body;
+  const { id } = req.body;
 
-  try {
-    const response = await UserModel.findByIdAndUpdate(
-      id, { name, password, email }, { new: true, runValidators: true }
-    );
-    res.status(200).send({
-      message: `User with id ${id} successfully updated.`,
-      name: response.name,
-      email: response.email,
-    });
-  } 
-  catch(error) {
-    res.status(500).send({
-      message: `Error while trying to update user with id: ${id}.`,
-      error: error.message
-    });
+  if (verifyUser(id, req, res)) {
+    try {
+      const user = await UserModel.findById(id);
+      Object.keys(req.body).forEach(key => user[key] = req.body[key]);   
+      user.save();       
+      res.status(200).send({
+        message: `User with id ${id} successfully updated.`,
+        name: user.name,
+        email: user.email,
+      });
+    } 
+    catch(error) {
+      res.status(500).send({
+        message: `Error while trying to update user with id: ${id}.`,
+        error: error.message
+      });
+    }
   }
 }
 
 const deleteUser = async (req, res) => {
   const { id } = req.body;
 
-  try {
-    const response = await UserModel.findByIdAndDelete(id);
-    if (response !== null) {
-      res.status(200).send({
-        message: `User with id ${id} successfully deleted.`
-      })
-    } 
-    else {
-      throw new Error(`User with id: ${id} doesn't exist.`)
+  if (verifyUser(id, req, res)) {
+    try {
+      const user = await UserModel.findByIdAndDelete(id);
+      if (!user) throw new Error(`User with id: ${id} doesn't exist.`);
+      res.status(200).send({ message: `User with id ${id} successfully deleted.` });
     }
-  }
-  catch(error) {
-    res.status(500).send({
-      message: `Error while trying to delete user with id: ${id}.`,
-      error: error.message,
-    })
+    catch(error) {
+      res.status(500).send({
+        message: `Error while trying to delete user with id: ${id}.`,
+        error: error.message,
+      })
+    }
   }
 }
 

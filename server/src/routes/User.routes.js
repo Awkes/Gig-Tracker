@@ -1,6 +1,6 @@
 const UserController = require('../controllers/User.controller');
 const Routes = require('../../config/Routes');
-const { verifyToken, verifyUser } = require('../middlewares/auth');
+const { verifyToken } = require('../middlewares/auth');
 
 const userRoutes = app => {
   app.post(Routes.createUser, UserController.createUser);

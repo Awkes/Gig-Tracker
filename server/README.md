@@ -20,8 +20,6 @@
 ---
 <b>DELETE /user</b> - Delete user. (PROTECTED)
 
-<code>{ id: String }</code>
-
 ---
 <b>POST /auth</b> - Sign in.
 
@@ -57,10 +55,11 @@ Query (optional)
 <b>GET /gig/:gigId</b> - Get one gig. (PROTECTED)
 
 ---
-<b>PUT /gig/:gigId</b> - Update gig. (PROTECTED)
+<b>PUT /gig</b> - Update gig. (PROTECTED)
 
 <code>
 {
+  id: String (gigId)
   creator: String (userId)
   artist: String,
   tour: String,
@@ -74,7 +73,9 @@ Query (optional)
 </code>
 
 ---
-<b>DELETE /gig/:gigId</b> - Delete gig. (PROTECTED)
+<b>DELETE /gig</b> - Delete gig. (PROTECTED)
+
+<code>{ id: String (gigId) }</code>
 
 ---
 <b>GET /stats/:userId</b> - Get statistics for user. (PROTECTED)
