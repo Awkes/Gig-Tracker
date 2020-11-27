@@ -7,18 +7,25 @@
 <code>{ username: String , password: String, email: String }</code>
 
 ---
-<b>GET /users</b> - Get all users.
+<b>GET /users</b> - Get all users. (PROTECTED)
 
 ---
-<b>GET /user/:userId</b> - Get user.
+<b>GET /user/:userId</b> - Get user. (PROTECTED)
 
 ---
-<b>PUT /user/:userId</b> - Update user.
+<b>PUT /user</b> - Update user. (PROTECTED)
 
-<code>{ username: String , password: String, email: String }</code>
+<code>{ id: String, username: String , password: String, email: String }</code>
 
 ---
-<b>DELETE /user/:userId</b> - Delete user.
+<b>DELETE /user</b> - Delete user. (PROTECTED)
+
+<code>{ id: String }</code>
+
+---
+<b>POST /auth</b> - Sign in.
+
+<code>{ email: String, password: String }</code>
 
 ---
 <b>POST /gig</b> - Create gig.
@@ -71,3 +78,7 @@ Query (optional)
 
 ---
 <b>GET /stats/:userId</b> - Get statistics for user.
+
+---
+* PROTECTED routes needs x-access-token (provided from /auth) in Headers.
+  

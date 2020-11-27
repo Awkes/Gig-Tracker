@@ -1,4 +1,8 @@
 const UserModel = require('../models/User.model');
+const { secret } = require('../../config/auth');
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const createUser = async (req, res) => {
   const { name, password, email } = req.body;
@@ -23,11 +27,7 @@ const createUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const response = await UserModel.find();
-    const users = response.map(user => {
-      const noPassUser = user.toObject();
-      delete noPassUser.password;
-      return noPassUser;
-    });
+    const users = response.map(({ id, name, email }) => ({ id, name, email }));
     res.status(200).send(users);
   }
   catch(error) {
@@ -43,9 +43,8 @@ const getUser = async (req, res) => {
   
   try {
     const response = await UserModel.findById(userId);
-    const user = response.toObject();
-    delete user.password;
-    res.status(200).send(user);
+    const { id, name, email} = response;
+    res.status(200).send({ id, name, email });
   }
   catch(error) {
     res.status(500).send({
@@ -56,47 +55,71 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { name, password, email } = req.body;
-  const { userId } = req.params;
+  const { id, name, password, email } = req.body;
 
   try {
     const response = await UserModel.findByIdAndUpdate(
-      userId, { name, password, email }, { new: true, runValidators: true }
+      id, { name, password, email }, { new: true, runValidators: true }
     );
     res.status(200).send({
-      message: `User with id ${userId} successfully updated.`,
+      message: `User with id ${id} successfully updated.`,
       name: response.name,
       email: response.email,
     });
   } 
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to update user with id: ${userId}.`,
+      message: `Error while trying to update user with id: ${id}.`,
       error: error.message
     });
   }
 }
 
 const deleteUser = async (req, res) => {
-  const { userId } = req.params;
+  const { id } = req.body;
 
   try {
-    const response = await UserModel.findByIdAndDelete(userId);
+    const response = await UserModel.findByIdAndDelete(id);
     if (response !== null) {
       res.status(200).send({
-        message: `User with id ${userId} successfully deleted.`
+        message: `User with id ${id} successfully deleted.`
       })
     } 
     else {
-      throw new Error(`User with id: ${userId} doesn't exist.`)
+      throw new Error(`User with id: ${id} doesn't exist.`)
     }
   }
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to delete user with id: ${userId}.`,
+      message: `Error while trying to delete user with id: ${id}.`,
       error: error.message,
     })
   }
 }
 
-module.exports = { createUser, getUsers, getUser, updateUser, deleteUser };
+const signIn = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(500).send({ message: 'Provide both email and password.' });
+
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) return res.status(404).send({ message: `User ${email} is not found.`});
+    
+    const validPass = bcrypt.compareSync(password, user.password);
+    if (!validPass) return res.status(401).send({ 
+      message: `Provided password for ${email} is incorrect.`,
+      accessToken: null,
+    });
+
+    const token = jwt.sign({ id: user.id }, secret, { expiresIn: 86400 });
+    res.status(200).send({ id: user.id, name: user.name, email: user.email, token });
+  }
+  catch(error) {
+    res.status(500).send({
+      message: `Error while trying to sign in ${email}.`,
+      error: error.message,
+    })
+  }
+}
+
+module.exports = { createUser, getUsers, getUser, updateUser, deleteUser, signIn };
