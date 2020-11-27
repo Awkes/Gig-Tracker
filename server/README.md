@@ -45,7 +45,7 @@
 </code>
 
 ---
-<b>GET /gigs/:userId[?query]</b> - Get all gigs for a user.
+<b>GET /gigs/:userId[?query]</b> - Get all gigs for a user. (PROTECTED)
 
 Query (optional)
 - search - search string to filter results
@@ -54,10 +54,10 @@ Query (optional)
 - page - page number
 
 ---
-<b>GET /gig/:gigId</b> - Get one gig.
+<b>GET /gig/:gigId</b> - Get one gig. (PROTECTED)
 
 ---
-<b>PUT /gig/:gigId</b> - Update gig.
+<b>PUT /gig/:gigId</b> - Update gig. (PROTECTED)
 
 <code>
 {
@@ -74,10 +74,10 @@ Query (optional)
 </code>
 
 ---
-<b>DELETE /gig/:gigId</b> - Delete gig.
+<b>DELETE /gig/:gigId</b> - Delete gig. (PROTECTED)
 
 ---
-<b>GET /stats/:userId</b> - Get statistics for user.
+<b>GET /stats/:userId</b> - Get statistics for user. (PROTECTED)
 
 ---
 * PROTECTED routes needs x-access-token (provided from /auth) in Headers.
