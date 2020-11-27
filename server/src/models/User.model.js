@@ -32,15 +32,17 @@ UserSchema.pre('findOneAndUpdate', async function(next) {
   const { password } = this._update;
   const { _id } = this.getFilter();
   
-  const passwordHasChanged = await (async function() {
-    const user = await models['User'].findById(_id);
-    const { password: oldPassword } = user;
-    console.log(oldPassword, password)
-    return !bcrypt.compareSync(password, oldPassword)
-  })();
-  
-  if (passwordHasChanged) this._update.password = await bcrypt.hash(password, 10);
-  else delete this._update.password
+  if (password) {
+    const passwordHasChanged = await (async function() {
+      const user = await models['User'].findById(_id);
+      if (!user) throw new Error('No user found!');
+      const { password: oldPassword } = user;  
+      return !bcrypt.compareSync(password, oldPassword)
+    })();
+    
+    if (passwordHasChanged) this._update.password = await bcrypt.hash(password, 10);
+    else delete this._update.password
+  } 
 
   next();
 })
