@@ -7,18 +7,23 @@
 <code>{ username: String , password: String, email: String }</code>
 
 ---
-<b>GET /users</b> - Get all users.
+<b>GET /users</b> - Get all users. (PROTECTED)
 
 ---
-<b>GET /user/:userId</b> - Get user.
+<b>GET /user/:userId</b> - Get user. (PROTECTED)
 
 ---
-<b>PUT /user/:userId</b> - Update user.
+<b>PUT /user</b> - Update user. (PROTECTED)
 
-<code>{ username: String , password: String, email: String }</code>
+<code>{ id: String, username: String , password: String, email: String }</code>
 
 ---
-<b>DELETE /user/:userId</b> - Delete user.
+<b>DELETE /user</b> - Delete user. (PROTECTED)
+
+---
+<b>POST /auth</b> - Sign in.
+
+<code>{ email: String, password: String }</code>
 
 ---
 <b>POST /gig</b> - Create gig.
@@ -38,7 +43,7 @@
 </code>
 
 ---
-<b>GET /gigs/:userId[?query]</b> - Get all gigs for a user.
+<b>GET /gigs/:userId[?query]</b> - Get all gigs for a user. (PROTECTED)
 
 Query (optional)
 - search - search string to filter results
@@ -47,13 +52,14 @@ Query (optional)
 - page - page number
 
 ---
-<b>GET /gig/:gigId</b> - Get one gig.
+<b>GET /gig/:gigId</b> - Get one gig. (PROTECTED)
 
 ---
-<b>PUT /gig/:gigId</b> - Update gig.
+<b>PUT /gig</b> - Update gig. (PROTECTED)
 
 <code>
 {
+  id: String (gigId)
   creator: String (userId)
   artist: String,
   tour: String,
@@ -67,7 +73,13 @@ Query (optional)
 </code>
 
 ---
-<b>DELETE /gig/:gigId</b> - Delete gig.
+<b>DELETE /gig</b> - Delete gig. (PROTECTED)
+
+<code>{ id: String (gigId) }</code>
 
 ---
-<b>GET /stats/:userId</b> - Get statistics for user.
+<b>GET /stats/:userId</b> - Get statistics for user. (PROTECTED)
+
+---
+* PROTECTED routes needs x-access-token (provided from /auth) in Headers.
+  
