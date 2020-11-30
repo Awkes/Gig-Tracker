@@ -39,7 +39,7 @@ const Gigs = () => {
         setError('Something went wSrong, please try again!')
       }
     })();
-  }, [filter, limit])
+  }, [filter, limit, authUser.id, authUser.token])
 
   function searchGigs(e: FormEvent): void {
     const { value: search } = e.currentTarget as HTMLInputElement;

@@ -30,7 +30,7 @@ const Stats = () => {
         setError('Something went wrong, please try again!')
       }
     })();
-  }, []);
+  }, [authUser.id, authUser.token]);
 
   if (status === 'pending') return <Spinner />;
 

@@ -25,7 +25,6 @@ const GigInfo = () => {
     (async function() {
       try {
         const gig = await getGig(id, authUser.token);
-        console.log(gig)
         setStatus(gig ? 'resolved' : 'error');
         gig ? setGig(gig) : setError(`Can't find gig with id: ${id}`);
       }
@@ -34,7 +33,7 @@ const GigInfo = () => {
         setError('Something went wrong, please try again!')
       }
     })();
-  }, [id]);
+  }, [id, authUser.token]);
 
   if (status === 'pending') return <Spinner />;
 
