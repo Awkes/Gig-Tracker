@@ -13,7 +13,7 @@ const stretchDelay = keyframes`
 
 const Spinner = () => (
   <div sx={{
-    margin: '100px auto',
+    margin: '50px auto',
     width: '50px',
     height: '40px',
     textAlign: 'center',
