@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 type Props = {
   gigs: { 
-    id: number,
+    _id: string,
     artist: string, 
     tour: string, 
     date: string, 
@@ -60,19 +60,19 @@ const GigTable = ({ gigs, setFilter }: Props) => {
         </tr>
       </thead>
       <tbody>
-        {gigs.map(({ id, artist, tour, date, venue, city, country }, i) => (
+        {gigs.map(({ _id, artist, tour, date, venue, city, country }, i) => (
           <tr 
-            key={id}
+            key={_id}
             sx={{ 
               ...trStyle,
               backgroundColor: i % 2 === 0 ? 'quarternary' : null,
               '&:hover': { backgroundColor: 'secondary' }
           }}
           >
-            <td><Link to={`/gig/${id}`}>{artist}</Link></td>
-            <td><Link to={`/gig/${id}`}>{tour}</Link></td>
-            <td><Link to={`/gig/${id}`}>{date.substring(0,10)}</Link></td>
-            <td><Link to={`/gig/${id}`}>{[venue, city, country].filter(val => val).join(', ')}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{artist}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{tour}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{date.substring(0,10)}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{[venue, city, country].filter(val => val).join(', ')}</Link></td>
           </tr>
         ))}
       </tbody>

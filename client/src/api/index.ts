@@ -18,7 +18,10 @@ const getGigs = (userId: string, token: string, filters: object = {}) => {
   });
 }
 
-// const getGig = () => {}     GET /gig/:gigId
+const getGig = (gigId: string, token: string) => (
+  get(`gig/${gigId}`, { headers: { 'x-access-token': token }  })
+);
+
 // const updateGig = () => {}  PUT /gig
 // const deleteGig = () => {}  DELETE /gig
 
@@ -26,4 +29,4 @@ const getStats = (userId: string, token: string) => get(`stats/${userId}`, {
   headers: { 'x-access-token': token }
 });
 
-export { auth, getGigs, getStats }
+export { auth, getGigs, getGig, getStats }
