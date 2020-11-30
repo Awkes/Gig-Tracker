@@ -22,6 +22,7 @@ const getGig = (gigId: string, token: string) => (
   get(`gig/${gigId}`, { headers: { 'x-access-token': token }  })
 );
 
+// const createGig = () => {} POST /gig
 // const updateGig = () => {}  PUT /gig
 // const deleteGig = () => {}  DELETE /gig
 

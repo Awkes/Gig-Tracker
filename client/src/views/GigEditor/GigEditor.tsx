@@ -7,21 +7,23 @@ import Box from '../../components/Box';
 import Spinner from '../../components/Spinner';
 import GigForm from './GigForm';
 import { reducer, initialState } from './reducer';
+import useAuth from '../../hooks/useAuth';
 
-import { getGigs } from '../../api';
+import { getGig } from '../../api';
 
 const GigEditor = () => {
   const { id } = useParams<any>();
   const [state, dispatch] = useReducer(
     reducer, { ...initialState, status: !id ? 'new' : 'pending'}
   );
+  
+  const { authUser } = useAuth();
 
   useEffect(() => {
     if (id) {
       (async function() {
         try {
-          const { gigs } = await getGigs();
-          const gig = gigs.find((gig: any) => gig.id === Number(id))
+          const gig = await getGig(id, authUser.token);
           gig
             ? dispatch({ type: 'SET_GIG', payload: gig })
             : dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` })
@@ -31,7 +33,7 @@ const GigEditor = () => {
         }
       })();
     }
-  }, [id]);
+  }, [id, authUser.token]);
 
   function handleInput(e: ChangeEvent) {
     const { name, value }: any = e.target;
