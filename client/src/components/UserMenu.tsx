@@ -64,8 +64,10 @@ const UserMenu = () => {
           letterSpacing: 1,
           boxShadow: 0,
         }}>
-          <div>
-            {authUser}
+          <FontAwesomeIcon icon={faUser} sx={{ fontSize: '50px', display: 'block' }} />
+          <div sx={{ textAlign: 'center' }}>
+            {authUser.name}<br />
+            <b>{authUser.email}</b>
           </div>
           <Button 
             onClick={signOut}

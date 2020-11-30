@@ -38,7 +38,7 @@ const Home = () => {
             ? <SignIn /> 
             : <div>
                 <h2 sx={{ margin: 0 }}>User</h2>
-                <p>Signed in as {authUser}</p>
+                <p>Signed in as {authUser.email}</p>
               </div>
           }
         </Box>
