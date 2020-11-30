@@ -18,7 +18,7 @@ const createGig = async (req, res) => {
 
 const getGigs = async (req, res) => {
   const { userId } = req.params;
-  const { search, sort } = req.query;
+  const { search, sort, order } = req.query;
   const limit = req.query && Number(req.query.limit) || null;
   let page = req.query && Number(req.query.page) || 1;
   
@@ -33,7 +33,7 @@ const getGigs = async (req, res) => {
       
       const response = await GigModel
         .search(search || null, { creator: userId })
-        .sort({ date: sort || 'desc' })
+        .sort({ [order || 'date']: sort || 'desc' })
         .skip((page-1) * limit)
         .limit(limit)
 

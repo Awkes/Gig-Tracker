@@ -11,6 +11,7 @@ async function client(
     headers: { 'Content-Type': 'application/json' },
     ...options 
   });
+
   const data = await res.json();
   return res.ok ? data : Promise.reject(data);
 }

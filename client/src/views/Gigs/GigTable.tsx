@@ -13,7 +13,7 @@ type Props = {
     city: string, 
     country: string
   }[],
-  setOrder: any
+  setFilter: any
 }
 
 const trStyle = {
@@ -33,14 +33,15 @@ const trStyle = {
   },
 }
 
-const GigTable = ({ gigs, setOrder }: Props) => {
+const GigTable = ({ gigs, setFilter }: Props) => {
   function changeOrder(e: MouseEvent) {
     const text = e?.currentTarget?.textContent?.toLowerCase();
-    const order = text === 'location' ? 'venue' : text;
+    const newOrder = text === 'location' ? 'venue' : text;
 
-    setOrder(({ orderBy, asc }: { orderBy: string, asc: boolean }) => ({
-      orderBy: order,
-      asc: orderBy === order ? !asc : true,
+    setFilter((filter: { order: string, sort: string, filter: string}) => ({
+      ...filter,
+      order: newOrder,
+      sort: filter.sort === 'asc' ? 'desc' : 'asc',
     }))
   }
 
@@ -70,8 +71,8 @@ const GigTable = ({ gigs, setOrder }: Props) => {
           >
             <td><Link to={`/gig/${id}`}>{artist}</Link></td>
             <td><Link to={`/gig/${id}`}>{tour}</Link></td>
-            <td><Link to={`/gig/${id}`}>{date}</Link></td>
-            <td><Link to={`/gig/${id}`}>{venue}, {city}, {country}</Link></td>
+            <td><Link to={`/gig/${id}`}>{date.substring(0,10)}</Link></td>
+            <td><Link to={`/gig/${id}`}>{[venue, city, country].filter(val => val).join(', ')}</Link></td>
           </tr>
         ))}
       </tbody>

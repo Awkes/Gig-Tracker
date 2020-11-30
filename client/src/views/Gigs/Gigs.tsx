@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { Fragment, useEffect, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,43 +9,47 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Spinner from '../../components/Spinner';
 import GigTable from './GigTable';
+import useAuth from '../../hooks/useAuth';
 
 import { getGigs } from '../../api'
 
 const Gigs = () => {
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState<string>('pending');
   const [error, setError] = useState<string|null>(null);
   const [gigs, setGigs] = useState([]);
-  const [order, setOrder] = useState({ orderBy: 'artist', asc: true });
-  const [total, setTotal] = useState(10)
+  const [filter, setFilter] = useState<any>({ order: 'date', sort: 'desc', search: '' });
+  const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
+  
+  const { authUser } = useAuth();
 
   useEffect(() => {
     (async function() {
       try {
-        const { gigs } = await getGigs();
+        const gigs = await getGigs(authUser.id, authUser.token, { ...filter, limit });
+        const { results, totalGigs } = gigs;
+
         setStatus('resolved');
-        setGigs(gigs);
+        setGigs(results);
+        setTotal(totalGigs);
+        setLimit(limit => limit < totalGigs ? limit : totalGigs);
       }
       catch {
         setStatus('error');
-        setError('Something went wrong, please try again!')
+        setError('Something went wSrong, please try again!')
       }
     })();
-  }, [])
+  }, [filter, limit])
 
-  // Temporary sorting, better sorting will be implemented with backend
-  useEffect(() => {
-    const { orderBy, asc } = order;
-    setGigs(gigs => ( 
-      gigs.sort((a: any, b: any) => a[orderBy] > b[orderBy] 
-        ? (asc ? 1 : -1) 
-        : (asc ? -1 : 1)
-    )));
-  }, [order]);
+  function searchGigs(e: FormEvent): void {
+    const { value: search } = e.currentTarget as HTMLInputElement;
+    setFilter((filter: { order: string, sort: string, search: string }) => (
+      { ...filter, search }
+    ));
+  }
 
-  // Temporary loading, real functionality to be implemented with backend
   function loadMore() {
-    setTotal(state => state + 10);
+    setLimit(state => state + 10);
   }
 
   if (status === 'pending') return <Spinner />;
@@ -76,14 +80,14 @@ const Gigs = () => {
               }}>
                 <h2 sx={{ margin: 0, justifySelf: 'start' }}>Gigs</h2>
                 <FontAwesomeIcon icon={faFilter} sx={{ color: 'secondary'}} />
-                <Input type="text" name="filter" />
+                <Input type="text" name="filter" onChange={searchGigs} />
               </div>
             </Box>
             <Box noPadding>
-              <GigTable gigs={gigs.slice(0, total)} setOrder={setOrder} />
+              <GigTable gigs={gigs} setFilter={setFilter} />
             </Box>
             <Box>
-              <Button onClick={loadMore} disabled={total >= gigs.length}>Load more</Button>
+              <Button onClick={loadMore} disabled={limit >= total}>Load more</Button>
             </Box>
           </Fragment>
       }    

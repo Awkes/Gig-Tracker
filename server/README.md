@@ -47,6 +47,7 @@
 
 Query (optional)
 - search - search string to filter results
+- order - field to order by (date, artist, tour, venue, city, country)
 - sort - sort order "asc" or "desc" (default "desc")
 - limit - number of entries per page
 - page - page number
