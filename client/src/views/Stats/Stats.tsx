@@ -7,6 +7,7 @@ import HorizontalTable from '../../components/HorizontalTable';
 import OrderedList from '../../components/OrderedList';
 import Spinner from '../../components/Spinner';
 import GigsVisitedOverTime from './GigsVisitedOverTime';
+import useAuth from '../../hooks/useAuth';
 
 import { getStats } from '../../api';
 
@@ -15,10 +16,12 @@ const Stats = () => {
   const [stats, setStats] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
+  const { authUser } = useAuth();
+
   useEffect(() => {
     (async function() {
       try {
-        const { stats } = await getStats();
+        const stats = await getStats(authUser.id, authUser.token);
         setStatus('resolved');
         setStats(stats);
       }
