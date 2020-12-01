@@ -11,7 +11,7 @@ import Textarea from '../../components/Textarea';
 
 type Props = {
   gig: {
-    id: number,
+    _id: number,
     artist: string, 
     tour: string, 
     date: string, 
@@ -26,10 +26,12 @@ type Props = {
   handleDelete: (e: MouseEvent) => void,
   addTrack: () => void,
   delTrack: (e: MouseEvent<HTMLButtonElement>) => void,
+  formIsValid: boolean,
 }
 
-const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTrack }: Props) => {
+const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTrack, formIsValid }: Props) => {
   const { artist, tour, date, venue, city, country, notes, setlist } = gig;
+
   return (
     <form onSubmit={handleSubmit} sx={{ display: 'grid', gap: 3 }}>
       <Box>
@@ -45,7 +47,17 @@ const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTr
           }
         }}>
           <h3 sx={{ margin: 0 }}>General Info</h3>
-          <label>
+          <label sx={{ 
+            position: 'relative',
+            '&:after': { 
+              content: '"*"',
+              color: 'text',
+              position: 'absolute',
+              right: 0,
+              top: '50%',
+              transform: 'translate(10px, -25%)'
+            }
+          }}>
             Artist:
             <Input type="text" value={artist} name="artist" onChange={handleInput} />
           </label>
@@ -53,7 +65,17 @@ const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTr
             Tour:
             <Input type="text" value={tour} name="tour" onChange={handleInput} />
           </label>
-          <label>
+          <label sx={{ 
+            position: 'relative',
+            '&:after': { 
+              content: '"*"',
+              color: 'text',
+              position: 'absolute',
+              right: 0,
+              top: '50%',
+              transform: 'translate(10px, -25%)'
+            }
+          }}>
             Date:
             <Input type="date" value={date} name="date" onChange={handleInput} />
           </label>
@@ -114,11 +136,11 @@ const GigForm = ({ gig, handleInput, handleSubmit, handleDelete, addTrack, delTr
 
       <Box>
         <div sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3 }}>
-          <Button type="button" onClick={handleDelete} danger>
+          <Button type="button" onClick={handleDelete} danger disabled={!gig._id}>
             <FontAwesomeIcon icon={faTrash} sx={{ marginBottom: '2px'}} />
             <span sx={{ marginLeft: 2 }}>Delete</span>
           </Button>
-          <Button type="submit">
+          <Button type="submit" disabled={!formIsValid}>
             <FontAwesomeIcon icon={faSave} sx={{ marginBottom: '2px'}} />
             <span sx={{ marginLeft: 2 }}>Save</span>
           </Button>
