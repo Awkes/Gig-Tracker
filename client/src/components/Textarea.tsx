@@ -12,6 +12,7 @@ const Textarea = (props: any) => (
       border: '1px solid',
       borderColor: 'border',
       borderRadius: 0,
+      backgroundColor: 'background',
     }} 
     {...props}
   />
