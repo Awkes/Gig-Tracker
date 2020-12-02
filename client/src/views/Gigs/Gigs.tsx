@@ -28,7 +28,6 @@ const Gigs = () => {
       try {
         const gigs = await getGigs(authUser.id, authUser.token, { ...filter, limit });
         const { results, totalGigs } = gigs;
-        console.log(gigs);
         setStatus('resolved');
         setGigs(results);
         setTotal(totalGigs);
