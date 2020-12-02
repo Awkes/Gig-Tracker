@@ -25,9 +25,9 @@ const Stats = () => {
         setStatus('resolved');
         setStats(stats);
       }
-      catch {
+      catch(error) {
         setStatus('error');
-        setError('Something went wrong, please try again!')
+        setError(error.error);
       }
     })();
   }, [authUser.id, authUser.token]);

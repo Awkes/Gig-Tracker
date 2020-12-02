@@ -119,8 +119,8 @@ const getStats = async (req, res) => {
   if (verifyUser(userId, req, res)) {
     try {
       const gigs = await GigModel.find({ creator: userId, date: { $lt: new Date() } }).sort({ date: 'asc' });
-    
-      if (gigs.length < 1) throw new Error('There is no stats available for user since the user have no gigs.')
+      
+      if (gigs.length < 1) throw new Error('No stats available for user.');
 
       const totalGigs = gigs.length;
       const totalArtists = [...new Set(gigs.map(({ artist }) => artist))].length;
