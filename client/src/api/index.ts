@@ -11,13 +11,29 @@ type Gig = {
   creator: string
 }
 
+type User = {
+  id?: string,
+  name: string,
+  email: string,
+  password: string
+}
+
 const auth = (email: string, password: string) => (
   post('auth', { body: JSON.stringify({ email, password }) })
 );
 
-// const createUser = () => {} POST /user
-// const getUser = () => {}    GET /user/:userId
-// const updateUser = () => {} PUT /user
+const getUser = (userId: string, token: string) => (
+  get(`user/${userId}`, { token })
+);
+
+const createUser = (body: User) => (
+  post('user', { body: JSON.stringify(body) })
+);
+
+const updateUser = (body: User, token: string) => (
+  put('user', { body: JSON.stringify(body), token })
+);
+
 // const deleteUser = () => {} DELETE /user
 
 const getGigs = (userId: string, token: string, filters: object = {}) => {
@@ -45,4 +61,15 @@ const deleteGig = (_id: string, creator: string, token: string) => (
 
 const getStats = (userId: string, token: string) => get(`stats/${userId}`, { token });
 
-export { auth, getGigs, getGig, createGig, updateGig, deleteGig, getStats }
+export { 
+  auth, 
+  getUser, 
+  createUser,
+  updateUser,
+  getGigs, 
+  getGig, 
+  createGig, 
+  updateGig, 
+  deleteGig, 
+  getStats 
+}
