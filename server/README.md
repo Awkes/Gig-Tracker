@@ -15,7 +15,7 @@
 ---
 <b>PUT /user</b> - Update user. (PROTECTED)
 
-<code>{ id: String, username: String , password: String, email: String }</code>
+<code>{ id: String, name: String , password: String, email: String }</code>
 
 ---
 <b>DELETE /user</b> - Delete user. (PROTECTED)

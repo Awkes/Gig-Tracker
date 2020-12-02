@@ -14,9 +14,20 @@ import GigInfo from './views/GigInfo';
 import Gigs from './views/Gigs';
 import NotFound from './views/NotFound';
 import Stats from './views/Stats';
+import UserEditor from './views/UserEditor';
 
 function App() {
-  const { homePath, gigsPath, gigPath, addGigPath, editGigPath, statsPath } = routes;
+  const { 
+    homePath, 
+    gigsPath, 
+    gigPath, 
+    addGigPath, 
+    editGigPath, 
+    statsPath, 
+    registerPath, 
+    userPath 
+  } = routes;
+
   return (
     <ThemeProvider theme={theme}>
       <Router>    
@@ -40,6 +51,12 @@ function App() {
               </GuardedRoute>
               <GuardedRoute path={statsPath}>
                 <Stats />
+              </GuardedRoute>
+              <Route path={registerPath} key={registerPath}>
+                <UserEditor />
+              </Route>
+              <GuardedRoute path={userPath} key={userPath}>
+                <UserEditor />
               </GuardedRoute>
               <Route>
                 <NotFound />

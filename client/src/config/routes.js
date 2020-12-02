@@ -5,4 +5,6 @@ export default {
   addGigPath: '/add-gig',
   editGigPath: '/edit-gig',
   statsPath: '/stats',
+  registerPath: '/register',
+  userPath: '/user'
 }
