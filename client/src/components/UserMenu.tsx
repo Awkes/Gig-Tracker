@@ -1,11 +1,13 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
 import useAuth from '../hooks/useAuth';
+import routes from '../config/routes';
 
 const UserMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,6 +71,7 @@ const UserMenu = () => {
             {authUser.name}<br />
             <b>{authUser.email}</b>
           </div>
+          <Link to={routes.userPath} sx={{ color: 'text', fontWeight: 'bold' }}>Edit profile</Link>
           <Button 
             onClick={signOut}
             type="button" 
