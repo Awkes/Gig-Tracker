@@ -28,15 +28,15 @@ const getGigs = async (req, res) => {
       const count = await GigModel
         .search(search || null, { creator: userId })
         .countDocuments();
-      const totalPages = Math.ceil(count / (limit || count)) || 0;
+      const totalPages = Math.ceil(count / (limit || count)) || 1;
       page = page < totalPages ? page : totalPages;
-      
+
       const response = await GigModel
         .search(search || null, { creator: userId })
         .sort({ [order || 'date']: sort || 'desc' })
         .skip((page-1) * limit)
         .limit(limit)
-
+      
       res.status(200).send({
         totalGigs: count,
         gigsPerPage: limit || count,

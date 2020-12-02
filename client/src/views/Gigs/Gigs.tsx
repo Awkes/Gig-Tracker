@@ -28,15 +28,15 @@ const Gigs = () => {
       try {
         const gigs = await getGigs(authUser.id, authUser.token, { ...filter, limit });
         const { results, totalGigs } = gigs;
-
+        console.log(gigs);
         setStatus('resolved');
         setGigs(results);
         setTotal(totalGigs);
         setLimit(limit => limit < totalGigs ? limit : totalGigs);
       }
-      catch {
+      catch(error) {
         setStatus('error');
-        setError('Something went wSrong, please try again!')
+        setError(error.message)
       }
     })();
   }, [filter, limit, authUser.id, authUser.token])
