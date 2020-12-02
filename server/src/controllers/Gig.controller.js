@@ -89,26 +89,26 @@ const updateGig = async (req, res) => {
   } 
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to update gig with id: ${id}.`,
+      message: `Error while trying to update gig with id: ${_id}.`,
       error: error.message
     });
   }
 }
 
 const deleteGig = async (req, res) => {
-  const { id } = req.body;
+  const { _id } = req.body;
 
   try {
-    const gig = await GigModel.findById(id);
-    if (!gig) throw new Error(`Gig with id: ${id} doesn't exist.`)
+    const gig = await GigModel.findById(_id);
+    if (!gig) throw new Error(`Gig with id: ${_id} doesn't exist.`)
     if (verifyUser(gig.creator.toString(), req, res)) {
-      GigModel.findByIdAndDelete(id);
-      res.status(200).send({ message: `Gig with id ${id} successfully deleted.` })
+      await GigModel.findByIdAndDelete(_id);
+      res.status(200).send({ message: `Gig with id ${_id} successfully deleted.` })
     }
   }
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to delete gig with id: ${id}.`,
+      message: `Error while trying to delete gig with id: ${_id}.`,
       error: error.message,
     })
   }

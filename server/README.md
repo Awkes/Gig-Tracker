@@ -76,7 +76,7 @@ Query (optional)
 ---
 <b>DELETE /gig</b> - Delete gig. (PROTECTED)
 
-<code>{ id: String (gigId) }</code>
+<code>{ id: String (gigId), creator: String (userId) }</code>
 
 ---
 <b>GET /stats/:userId</b> - Get statistics for user. (PROTECTED)

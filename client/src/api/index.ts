@@ -39,8 +39,10 @@ const updateGig = (body: Gig, token: string) => (
   put('gig', { token, body: JSON.stringify(body) })
 );
 
-// const deleteGig = () => {}  DELETE /gig
+const deleteGig = (_id: string, creator: string, token: string) => (
+  del('gig', { token, body: JSON.stringify({ _id, creator }) })
+);
 
 const getStats = (userId: string, token: string) => get(`stats/${userId}`, { token });
 
-export { auth, getGigs, getGig, createGig, updateGig, getStats }
+export { auth, getGigs, getGig, createGig, updateGig, deleteGig, getStats }

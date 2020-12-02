@@ -10,7 +10,7 @@ import { reducer, initialState } from './reducer';
 import useAuth from '../../hooks/useAuth';
 import routes from '../../config/routes';
 
-import { getGig, createGig, updateGig } from '../../api';
+import { getGig, createGig, updateGig, deleteGig } from '../../api';
 
 const GigEditor = () => {
   const { id } = useParams<any>();
@@ -69,9 +69,16 @@ const GigEditor = () => {
     }
   }
 
-  function handleDelete(e: MouseEvent): void {
-    // To be implemented
-    window.confirm('Are your sure you want to delete this gig?');
+  async function handleDelete(e: MouseEvent): Promise<any> {
+    const confirm = window.confirm('Are your sure you want to delete this gig?');
+    if (confirm) {
+      try {
+        const response = await deleteGig(state.gig._id, authUser.id, authUser.token);
+        alert(response.message);
+        history.push(routes.gigsPath);
+      }
+      catch (error) { alert(error.message) }
+    }
   }
 
   function addTrack() {
