@@ -19,8 +19,8 @@ function App() {
   const { homePath, gigsPath, gigPath, addGigPath, editGigPath, statsPath } = routes;
   return (
     <ThemeProvider theme={theme}>
-      <AuthContextProvider>
-        <Router>    
+      <Router>    
+        <AuthContextProvider>
           <Layout>
             <Switch>
               <Route exact path={homePath}>
@@ -46,8 +46,8 @@ function App() {
               </Route>
             </Switch>
           </Layout>
-        </Router>
-      </AuthContextProvider>
+        </AuthContextProvider>
+      </Router>
     </ThemeProvider>
   );
 }

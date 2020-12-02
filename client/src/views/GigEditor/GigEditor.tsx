@@ -1,37 +1,47 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect, useReducer } from 'react';
-import { Prompt, useParams } from 'react-router-dom';
+import { ChangeEvent, FormEvent, Fragment, MouseEvent, useEffect, useMemo, useReducer } from 'react';
+import { Prompt, useParams, useHistory } from 'react-router-dom';
 
 import Box from '../../components/Box';
 import Spinner from '../../components/Spinner';
 import GigForm from './GigForm';
 import { reducer, initialState } from './reducer';
+import useAuth from '../../hooks/useAuth';
+import routes from '../../config/routes';
 
-import { getGigs } from '../../api';
+import { getGig, createGig, updateGig, deleteGig } from '../../api';
 
 const GigEditor = () => {
   const { id } = useParams<any>();
   const [state, dispatch] = useReducer(
     reducer, { ...initialState, status: !id ? 'new' : 'pending'}
   );
+  
+  const { authUser } = useAuth();
+  const history = useHistory();
 
   useEffect(() => {
     if (id) {
       (async function() {
         try {
-          const { gigs } = await getGigs();
-          const gig = gigs.find((gig: any) => gig.id === Number(id))
+          const gig = await getGig(id, authUser.token);
           gig
             ? dispatch({ type: 'SET_GIG', payload: gig })
             : dispatch({ type: 'ERROR', payload: `Can't find gig with id: ${id}` })
         }
-        catch {
-          dispatch({ type: 'ERROR', payload: 'Something went wrong, please try again!' })
+        catch(error) {
+          dispatch({ type: 'ERROR', payload: error.message })
         }
       })();
     }
-  }, [id]);
+  }, [id, authUser.token]);
+
+  const formIsValid = useMemo(() => {
+    const { artist, date } = state.gig;
+    const d: Date = new Date(date);
+    return artist.length > 0 && date.length >= 10 && d instanceof Date
+  }, [state.gig]);
 
   function handleInput(e: ChangeEvent) {
     const { name, value }: any = e.target;
@@ -43,14 +53,32 @@ const GigEditor = () => {
     }
   }
 
-  function handleSubmit(e: FormEvent): void {
-    // To be implemented
+  async function handleSubmit(e: FormEvent): Promise<any> {
     e.preventDefault();
+    dispatch({ type: 'STATUS_CHANGE', payload: 'submit' });
+    if (formIsValid) { 
+      try {
+        const gig = id 
+          ? await updateGig({ ...state.gig, creator: authUser.id }, authUser.token)
+          : await createGig({ ...state.gig, creator: authUser.id }, authUser.token);
+        history.push(`${routes.gigPath}/${gig._id}`);
+      }
+      catch(error) {
+        dispatch({ type: 'ERROR', payload: error.message })
+      }
+    }
   }
 
-  function handleDelete(e: MouseEvent): void {
-    // To be implemented
-    window.confirm('Are your sure you want to delete this gig?');
+  async function handleDelete(e: MouseEvent): Promise<any> {
+    const confirm = window.confirm('Are your sure you want to delete this gig?');
+    if (confirm) {
+      try {
+        const response = await deleteGig(state.gig._id, authUser.id, authUser.token);
+        alert(response.message);
+        history.push(routes.gigsPath);
+      }
+      catch (error) { alert(error.message) }
+    }
   }
 
   function addTrack() {
@@ -93,6 +121,7 @@ const GigEditor = () => {
               handleDelete={handleDelete}
               handleInput={handleInput}
               handleSubmit={handleSubmit}
+              formIsValid={formIsValid}
             />
           </Fragment>
       }

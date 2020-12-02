@@ -9,8 +9,9 @@ import Box from '../components/Box';
 import HorizontalTable from '../components/HorizontalTable';
 import OrderedList from '../components/OrderedList';
 import Spinner from '../components/Spinner';
+import useAuth from '../hooks/useAuth';
 
-import { getGigs } from '../api';
+import { getGig } from '../api';
 
 const GigInfo = () => {
   const { id } = useParams<any>();
@@ -18,11 +19,12 @@ const GigInfo = () => {
   const [gig, setGig] = useState<any>(null);
   const [error, setError] = useState<any>(null);
 
+  const { authUser } = useAuth();
+  
   useEffect(() => {
     (async function() {
       try {
-        const { gigs } = await getGigs();
-        const gig = gigs.find((gig: any) => gig.id === Number(id))
+        const gig = await getGig(id, authUser.token);
         setStatus(gig ? 'resolved' : 'error');
         gig ? setGig(gig) : setError(`Can't find gig with id: ${id}`);
       }
@@ -31,7 +33,7 @@ const GigInfo = () => {
         setError('Something went wrong, please try again!')
       }
     })();
-  }, [id]);
+  }, [id, authUser.token]);
 
   if (status === 'pending') return <Spinner />;
 

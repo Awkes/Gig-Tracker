@@ -47,6 +47,7 @@
 
 Query (optional)
 - search - search string to filter results
+- order - field to order by (date, artist, tour, venue, city, country)
 - sort - sort order "asc" or "desc" (default "desc")
 - limit - number of entries per page
 - page - page number
@@ -75,7 +76,7 @@ Query (optional)
 ---
 <b>DELETE /gig</b> - Delete gig. (PROTECTED)
 
-<code>{ id: String (gigId) }</code>
+<code>{ id: String (gigId), creator: String (userId) }</code>
 
 ---
 <b>GET /stats/:userId</b> - Get statistics for user. (PROTECTED)

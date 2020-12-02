@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 type Props = {
   gigs: { 
-    id: number,
+    _id: string,
     artist: string, 
     tour: string, 
     date: string, 
@@ -13,7 +13,7 @@ type Props = {
     city: string, 
     country: string
   }[],
-  setOrder: any
+  setFilter: any
 }
 
 const trStyle = {
@@ -33,14 +33,15 @@ const trStyle = {
   },
 }
 
-const GigTable = ({ gigs, setOrder }: Props) => {
+const GigTable = ({ gigs, setFilter }: Props) => {
   function changeOrder(e: MouseEvent) {
     const text = e?.currentTarget?.textContent?.toLowerCase();
-    const order = text === 'location' ? 'venue' : text;
+    const newOrder = text === 'location' ? 'venue' : text;
 
-    setOrder(({ orderBy, asc }: { orderBy: string, asc: boolean }) => ({
-      orderBy: order,
-      asc: orderBy === order ? !asc : true,
+    setFilter((filter: { order: string, sort: string, filter: string}) => ({
+      ...filter,
+      order: newOrder,
+      sort: filter.sort === 'asc' ? 'desc' : 'asc',
     }))
   }
 
@@ -59,19 +60,19 @@ const GigTable = ({ gigs, setOrder }: Props) => {
         </tr>
       </thead>
       <tbody>
-        {gigs.map(({ id, artist, tour, date, venue, city, country }, i) => (
+        {gigs.map(({ _id, artist, tour, date, venue, city, country }, i) => (
           <tr 
-            key={id}
+            key={_id}
             sx={{ 
               ...trStyle,
               backgroundColor: i % 2 === 0 ? 'quarternary' : null,
               '&:hover': { backgroundColor: 'secondary' }
           }}
           >
-            <td><Link to={`/gig/${id}`}>{artist}</Link></td>
-            <td><Link to={`/gig/${id}`}>{tour}</Link></td>
-            <td><Link to={`/gig/${id}`}>{date}</Link></td>
-            <td><Link to={`/gig/${id}`}>{venue}, {city}, {country}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{artist}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{tour}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{date.substring(0,10)}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{[venue, city, country].filter(val => val).join(', ')}</Link></td>
           </tr>
         ))}
       </tbody>

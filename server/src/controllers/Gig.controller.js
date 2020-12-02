@@ -18,7 +18,7 @@ const createGig = async (req, res) => {
 
 const getGigs = async (req, res) => {
   const { userId } = req.params;
-  const { search, sort } = req.query;
+  const { search, sort, order } = req.query;
   const limit = req.query && Number(req.query.limit) || null;
   let page = req.query && Number(req.query.page) || 1;
   
@@ -33,7 +33,7 @@ const getGigs = async (req, res) => {
       
       const response = await GigModel
         .search(search || null, { creator: userId })
-        .sort({ date: sort || 'desc' })
+        .sort({ [order || 'date']: sort || 'desc' })
         .skip((page-1) * limit)
         .limit(limit)
 
@@ -73,42 +73,42 @@ const getGig = async (req, res) => {
 }
 
 const updateGig = async (req, res) => {
-  const { id } = req.body;
+  const { _id } = req.body;
 
   try {
-    const gig = await GigModel.findById(id);
+    const gig = await GigModel.findById(_id);
     if (!gig) throw new Error('No gig found.');
     if (verifyUser(gig.creator.toString(), req, res)) {
       Object.keys(req.body).forEach(key => gig[key] = req.body[key]);   
       gig.save();
       res.status(200).send({
-        message: `Gig with id ${id} successfully updated.`,
+        message: `Gig with id ${_id} successfully updated.`,
         ...gig.toObject(),
       });
     }
   } 
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to update gig with id: ${id}.`,
+      message: `Error while trying to update gig with id: ${_id}.`,
       error: error.message
     });
   }
 }
 
 const deleteGig = async (req, res) => {
-  const { id } = req.body;
+  const { _id } = req.body;
 
   try {
-    const gig = await GigModel.findById(id);
-    if (!gig) throw new Error(`Gig with id: ${id} doesn't exist.`)
+    const gig = await GigModel.findById(_id);
+    if (!gig) throw new Error(`Gig with id: ${_id} doesn't exist.`)
     if (verifyUser(gig.creator.toString(), req, res)) {
-      GigModel.findByIdAndDelete(id);
-      res.status(200).send({ message: `Gig with id ${id} successfully deleted.` })
+      await GigModel.findByIdAndDelete(_id);
+      res.status(200).send({ message: `Gig with id ${_id} successfully deleted.` })
     }
   }
   catch(error) {
     res.status(500).send({
-      message: `Error while trying to delete gig with id: ${id}.`,
+      message: `Error while trying to delete gig with id: ${_id}.`,
       error: error.message,
     })
   }
