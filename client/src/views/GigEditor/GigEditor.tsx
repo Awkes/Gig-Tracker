@@ -10,7 +10,7 @@ import { reducer, initialState } from './reducer';
 import useAuth from '../../hooks/useAuth';
 import routes from '../../config/routes';
 
-import { getGig, createGig } from '../../api';
+import { getGig, createGig, updateGig } from '../../api';
 
 const GigEditor = () => {
   const { id } = useParams<any>();
@@ -41,7 +41,7 @@ const GigEditor = () => {
     const { artist, date } = state.gig;
     const d: Date = new Date(date);
     return artist.length > 0 && date.length >= 10 && d instanceof Date
-  }, [state.gig.artist, state.gig.date]);
+  }, [state.gig]);
 
   function handleInput(e: ChangeEvent) {
     const { name, value }: any = e.target;
@@ -59,7 +59,7 @@ const GigEditor = () => {
     if (formIsValid) { 
       try {
         const gig = id 
-          ? console.log('ost')
+          ? await updateGig({ ...state.gig, creator: authUser.id }, authUser.token)
           : await createGig({ ...state.gig, creator: authUser.id }, authUser.token);
         history.push(`${routes.gigPath}/${gig._id}`);
       }

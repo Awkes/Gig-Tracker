@@ -73,16 +73,16 @@ const getGig = async (req, res) => {
 }
 
 const updateGig = async (req, res) => {
-  const { id } = req.body;
+  const { _id } = req.body;
 
   try {
-    const gig = await GigModel.findById(id);
+    const gig = await GigModel.findById(_id);
     if (!gig) throw new Error('No gig found.');
     if (verifyUser(gig.creator.toString(), req, res)) {
       Object.keys(req.body).forEach(key => gig[key] = req.body[key]);   
       gig.save();
       res.status(200).send({
-        message: `Gig with id ${id} successfully updated.`,
+        message: `Gig with id ${_id} successfully updated.`,
         ...gig.toObject(),
       });
     }

@@ -1,6 +1,7 @@
 import { get, post, put, del } from './client';
 
 type Gig = {
+  _id: string,
   artist: string, 
   tour: string, 
   date: string, 
@@ -34,9 +35,12 @@ const createGig = (body: Gig, token: string) => (
   post('gig', { token, body: JSON.stringify(body) })
 );
 
-// const updateGig = () => {}  PUT /gig
+const updateGig = (body: Gig, token: string) => (
+  put('gig', { token, body: JSON.stringify(body) })
+);
+
 // const deleteGig = () => {}  DELETE /gig
 
 const getStats = (userId: string, token: string) => get(`stats/${userId}`, { token });
 
-export { auth, getGigs, getGig, createGig, getStats }
+export { auth, getGigs, getGig, createGig, updateGig, getStats }
