@@ -30,6 +30,7 @@ const Header = () => {
       paddingX: [2, 3],
       backgroundColor: 'primary',
       boxShadow: 0,
+      zIndex: '100',
     }}>
       <Logo />
 
