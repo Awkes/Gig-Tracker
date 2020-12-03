@@ -64,7 +64,6 @@ const UserEditor = () => {
 
   useEffect(() => {
     if (authUser && pathname === routes.userPath) {
-      console.log('inne');
       (async function() {
         try {
           const user = await getUser(authUser.id, authUser.token);
@@ -75,7 +74,7 @@ const UserEditor = () => {
         setLoading(false);
       })();
     }
-  }, [authUser]);
+  }, [authUser, pathname]);
 
   return (loading 
     ? <Spinner />
