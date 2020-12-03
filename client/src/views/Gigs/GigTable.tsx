@@ -65,7 +65,7 @@ const GigTable = ({ gigs, setFilter }: Props) => {
             key={_id}
             sx={{ 
               ...trStyle,
-              backgroundColor: i % 2 === 0 ? 'quarternary' : null,
+              backgroundColor: i % 2 === 0 ? 'quarternary' : 'initial',
               '&:hover': { backgroundColor: 'secondary' }
           }}
           >
