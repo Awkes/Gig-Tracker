@@ -36,10 +36,11 @@ const updateUser = (body: User, token: string) => (
 
 // const deleteUser = () => {} DELETE /user
 
-const getGigs = (userId: string, token: string, filters: object = {}) => {
-  const queryString = Object.entries(filters).map(
-    ([key, val]: [string, string]) => key + '=' + val
-  ).join('&');
+const getGigs = (userId: string, token: string, filters: object ) => {
+  // const queryString = (Object.entries(filters) || []).map(
+  //   ([key, val]: [string, string]) => key + '=' + val
+  // ).join('&');
+  const queryString = '';
   return get(`gigs/${userId}${queryString && '?' + queryString}`, { token });
 }
 
