@@ -31,7 +31,6 @@ const Gigs = () => {
         setStatus('resolved');
         setGigs(results);
         setTotal(totalGigs);
-        setLimit(limit => limit < totalGigs ? limit : totalGigs);
       }
       catch(error) {
         setStatus('error');
