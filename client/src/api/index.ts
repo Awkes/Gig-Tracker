@@ -38,7 +38,7 @@ const updateUser = (body: User, token: string) => (
 
 const getGigs = (userId: string, token: string, filters: object = {}) => {
   const queryString = Object.entries(filters).map(
-    ([key, val]: [string, string]) => key + '=' + val
+    ([key, val]: any) => key + '=' + val
   ).join('&');
   return get(`gigs/${userId}${queryString && '?' + queryString}`, { token });
 }

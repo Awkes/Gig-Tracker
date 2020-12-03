@@ -14,7 +14,7 @@ const NavLink = ({ children, to }: Props) => (
     sx={{
       display: 'block',
       padding: 2,
-      paddingTop: ({ space }) => space[2]+2+'px',
+      paddingTop: ({ space }: any) => space[2]+2+'px',
       color: 'dark',
       letterSpacing: 1,
       textDecoration: 'none',
