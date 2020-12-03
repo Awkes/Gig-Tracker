@@ -75,7 +75,7 @@ const Stats = () => {
             </Box>
             <Box>
               <h3 sx={{ margin: 0, marginBottom: 3 }}>Yearly visited gigs</h3>
-              <HorizontalTable values={stats?.yearlyVisitedGigs?.map((val: any[]) => [val[0]+':', val[1]])} />
+              <HorizontalTable values={stats?.yearlyVisitedGigs?.map((val: any[]) => [val[0]+':', val[1]]).reverse()} />
             </Box>
             <GigsVisitedOverTime 
               data={stats?.gigsVisitedOverTime?.map((gig: any[]) => gig[1])} 
