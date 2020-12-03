@@ -13,6 +13,11 @@ app.use(helmet());
 app.use(morgan('common'));
 app.use(express.json());
 
+userRoutes(app);
+gigRoutes(app);
+
+DB.connect();
+
 dotenv.config();
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build/'));
@@ -21,8 +26,4 @@ if (process.env.NODE_ENV === 'production') {
   ));
 }
 
-userRoutes(app);
-gigRoutes(app);
-
-DB.connect();
 Server.listen(app);
