@@ -27,3 +27,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Server.listen(app);
+
+module.exports = app;

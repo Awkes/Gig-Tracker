@@ -43,7 +43,13 @@ const getGigs = async (req, res) => {
         totalPages,
         currentPage: page,
         searchString: search || null,
-        results: response
+        results: response.map(gig => {
+          const date = new Date(gig.date);
+          return ({
+            ...gig.toObject(), 
+            date: `${date.getFullYear()}-${('0'+(date.getMonth()+1)).slice(-2)}-${('0'+date.getDate()).slice(-2)}`
+          });
+        })
       });
     }
     catch(error) {
@@ -61,8 +67,13 @@ const getGig = async (req, res) => {
   try {
     const response = await GigModel.findById(gigId);
     if (!response) throw new Error('No gig found.');
-    if (verifyUser(response.creator.toString(), req, res)) 
-      res.status(200).send(response);
+    if (verifyUser(response.creator.toString(), req, res)) {
+      const date = new Date(response.date);
+      res.status(200).send({
+        ...response.toObject(),
+        date: `${date.getFullYear()}-${('0'+(date.getMonth()+1)).slice(-2)}-${('0'+date.getDate()).slice(-2)}`
+      });
+    }
   }
   catch(error) {
     res.status(500).send({

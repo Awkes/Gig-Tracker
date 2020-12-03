@@ -17,6 +17,7 @@ const Box = ({ children, noPadding = false, error = false }: Props) => (
     border: '1px solid',
     borderColor: error ? 'error' : 'border',
     maxWidth: '100%',
+    overflow: 'hidden',
   }}>
     {children}
   </div>
