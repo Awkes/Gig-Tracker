@@ -71,7 +71,7 @@ const GigTable = ({ gigs, setFilter }: Props) => {
           >
             <td><Link to={`/gig/${_id}`}>{artist}</Link></td>
             <td><Link to={`/gig/${_id}`}>{tour}</Link></td>
-            <td><Link to={`/gig/${_id}`}>{date.substring(0,10)}</Link></td>
+            <td><Link to={`/gig/${_id}`}>{date}</Link></td>
             <td><Link to={`/gig/${_id}`}>{[venue, city, country].filter(val => val).join(', ')}</Link></td>
           </tr>
         ))}
