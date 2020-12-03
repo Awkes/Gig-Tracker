@@ -21,7 +21,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "eslint": "^7.13.0",
+    "eslint": "^6.6.0",
     "nodemon": "^2.0.6"
   }
 }
